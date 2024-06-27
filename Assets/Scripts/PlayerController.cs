@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
     private bool bShouldCheckIfReached = false;
-    private int health;
+    private float health;
     private NavMeshAgent _agent;
     
     private void Awake()
@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
         return castPoint.transform.position;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
@@ -173,5 +173,11 @@ public class PlayerController : MonoBehaviour
     public float GetMaxRange()
     {
         return maxAttackRange;
+    }
+
+    public void AddHp(float healingValue)
+    {
+        health += healingValue;
+        Debug.Log("Got Healed, now have " + health + " health points");
     }
 }
