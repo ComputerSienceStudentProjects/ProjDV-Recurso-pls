@@ -21,7 +21,7 @@ public class MedKitPowerup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Here");
+        Debug.Log("Here V777");
         if (other is { gameObject: { tag: "Player" } })
         {
             PlayerController controller = other.GetComponent<PlayerController>();

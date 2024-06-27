@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
+        cameraController = Camera.main.gameObject.GetComponent<CameraController>();
         
        
         
