@@ -104,6 +104,10 @@ public class PlayerInputSystem : MonoBehaviour
                 _playerController = null;
                 _aiController = null;
                 aiStartTurnEvent.Raise();
+                foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
+                {
+                    playerObj.GetComponent<PlayerController>().ResetMovementFlag();
+                }
             }
         }
         

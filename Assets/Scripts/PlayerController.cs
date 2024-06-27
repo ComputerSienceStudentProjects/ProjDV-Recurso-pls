@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject castPoint;
     [SerializeField] private CameraController cameraController;
     
+    private bool _hasMovedAlready = false;
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
     private bool bShouldCheckIfReached = false;
@@ -88,6 +90,7 @@ public class PlayerController : MonoBehaviour
     
     public async void PerformMove(Vector3 point)
     {
+        if (_hasMovedAlready) return;
         if (Vector3.Distance(transform.position, point) > maxMovementRange) return;
         OnDeselected();
         var navMeshPath = new NavMeshPath();
@@ -100,6 +103,12 @@ public class PlayerController : MonoBehaviour
         bShouldCheckIfReached = true;
         selectedMaterial.SetFloat("_OutlineSize", 0f);
         walkingMaterial.SetFloat("_OutlineSize", 1.01f);
+        _hasMovedAlready = true;
+    }
+
+    public void ResetMovementFlag()
+    {
+        _hasMovedAlready = false;
     }
 
     private async Task RotateTowards(Vector3 corner)
