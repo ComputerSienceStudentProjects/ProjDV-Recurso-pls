@@ -133,7 +133,7 @@ public class PlayerInputSystem : MonoBehaviour
         float randomValue = Random.value;
         if (attackOdds > randomValue)
         {
-            _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController);
+            _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController,true);
 
             Debug.Log("Attack successful with odds of " + (attackOdds * 100f) + "%");
             _playerController.OnDeselected();
@@ -142,6 +142,7 @@ public class PlayerInputSystem : MonoBehaviour
         }
         else
         {
+            _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController,false);
             Debug.Log("Attack failed. Random value was " + randomValue + " and attack odds were " + attackOdds);
             _playerController.OnDeselected();
             _playerController = null;

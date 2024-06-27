@@ -148,11 +148,12 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public async void PlayAttackAnim(Vector3 aiTargetPos,AIController aiTargetController)
+    public async void PlayAttackAnim(Vector3 aiTargetPos,AIController aiTargetController,bool sucess)
     {
         await RotateTowards(aiTargetPos);
         _animator.SetTrigger("Attack");
         await isDoneAttaking();
+        if (!sucess) return;
         aiTargetController.TakeDamage(GetBaseDamage());
     }
 
