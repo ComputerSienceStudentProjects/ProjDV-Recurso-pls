@@ -1,0 +1,75 @@
+# Built application files
+/[Bb]uild/
+/[Ll]ibrary/
+/[Ll]ocal[Cc]ache/
+/[Tt]emp/
+/[Oo]bj/
+/[Oo]bj64/
+/[Bb]uilds/
+/[Ll]ogs
+/[Uu][Ii]IElementsSchema/
+
+# User-specific files
+/[Uu]ser[Ss]ettings/
+
+# Visual Studio / MonoDevelop / Rider
+*.userprefs
+*.sln
+*.suo
+*.tmp
+*.user
+*.userosscache
+*.sln.ide
+*.pidb
+*.booproj
+*.csproj
+*.unityproj
+*.sln.DotSettings.user
+*.sln.DotSettings
+
+# Unity3D generated meta files
+*.pidb.meta
+
+# Unity3D Generated File On Crash Reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100/
+.fseventsd/
+.Spotlight-V100/
+.TemporaryItems/
+.Trashes/
+
+# Directories potentially created on remote AFP share
+.AppleDB/
+.AppleDesktop/
+Network Trash Folder/
+Temporary Items/
+.apdisk
+
+#VsCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
