@@ -10,12 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4de250b23e724434bad2ccbf5cd698e1, type: 3}
-  m_Name: New Snapshot
+  m_Name: SaveSlot1
   m_EditorClassIdentifier: 
+  saveName: Save 1
+  saveType: 0
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
     position: {x: 8.881851, y: 1.429352, z: 0.4734172}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     health: 10
+    hasAttacked: 0
+    hasMoved: 0
   aiObjects: []
-  levelIndex: 0
+  levelData:
+    levelIndex: 0
+    turnCount: 0
+    turnState: 0
+    playerPhaseStatus: 0

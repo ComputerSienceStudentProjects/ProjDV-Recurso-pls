@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
 {
-    [SerializeField] private Snapshot saveSnapshot;
+    [SerializeField] private Snapshot[] saveSlots;
 
     private void Start()
     {
@@ -22,16 +22,16 @@ public class SaveManager : MonoBehaviour
    
     private void Load()
     {
-        saveSnapshot.LoadSave();
+        saveSlots[0].LoadSave();
     }
     private void Save()
     {
-        saveSnapshot.Save();
+        saveSlots[0].Save();
     }
 
     private void AfterSceneLoading(Scene arg0, LoadSceneMode arg1)
     {
-        saveSnapshot.PostLoad();
+        saveSlots[0].PostLoad();
     }
 
     private void OnGUI()
