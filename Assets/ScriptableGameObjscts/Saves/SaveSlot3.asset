@@ -16,8 +16,8 @@ MonoBehaviour:
   saveType: 0
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: 8.881851, y: 1.429352, z: 0.4734172}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
+    position: {x: -3.5776916, y: 1.4379184, z: 0.71975946}
+    rotation: {x: -0, y: -0.5716134, z: -0, w: 0.8205231}
     health: 10
     hasAttacked: 0
     hasMoved: 0
@@ -27,3 +27,5 @@ MonoBehaviour:
     turnCount: 0
     turnState: 0
     playerPhaseStatus: 0
+  playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+  aiPrefab: {fileID: 0}

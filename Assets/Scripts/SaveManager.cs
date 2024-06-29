@@ -30,6 +30,13 @@ public class SaveManager : MonoBehaviour
    
     private void Load()
     {
+        
+        GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Unreveal");
+        Invoke(nameof(DoLoad),1f);
+    }
+
+    private void DoLoad()
+    {
         saveSlots[(int)saveSlot].LoadSave();
     }
     private void Save()

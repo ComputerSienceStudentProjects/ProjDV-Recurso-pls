@@ -134,8 +134,9 @@ public class Snapshot : ScriptableObject
     
     public void LoadSave()
     { 
-       SceneManager.LoadScene(levelData.LevelIndex);
+        SceneManager.LoadScene(levelData.LevelIndex);
     }
+
 
     public void PostLoad()
     {
@@ -159,6 +160,7 @@ public class Snapshot : ScriptableObject
         }
 
         GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
+        GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Reveal");
     }
 
     public void Save()

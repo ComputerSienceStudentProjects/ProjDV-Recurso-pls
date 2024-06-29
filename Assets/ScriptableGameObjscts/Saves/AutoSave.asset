@@ -16,20 +16,22 @@ MonoBehaviour:
   saveType: 1
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: 8.881851, y: 1.429352, z: 0.4734172}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
+    position: {x: 3.159615, y: 1.4379184, z: -0.8804426}
+    rotation: {x: -0, y: 0.78456455, z: -0, w: 0.62004715}
+    health: 10
+    hasAttacked: 0
+    hasMoved: 1
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: -6.8843966, y: 1.4379184, z: -3.9784164}
+    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
     health: 10
     hasAttacked: 0
     hasMoved: 0
-  aiObjects:
-  - modelReference: {fileID: 0}
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    health: 0
-    hasAttacked: 0
-    hasMoved: 0
+  aiObjects: []
   levelData:
     levelIndex: 0
     turnCount: 0
     turnState: 0
     playerPhaseStatus: 0
+  playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+  aiPrefab: {fileID: 0}
