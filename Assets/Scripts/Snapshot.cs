@@ -17,7 +17,17 @@ public class CharacterData
     [SerializeField] private float health;
     [SerializeField] private bool hasAttacked;
     [SerializeField] private bool hasMoved;
-    
+
+    public CharacterData(GameObject modelReference, Vector3 position, Quaternion rotation, float health, bool hasAttacked, bool hasMoved)
+    {
+        this.modelReference = modelReference;
+        this.position = position;
+        this.rotation = rotation;
+        this.health = health;
+        this.hasAttacked = hasAttacked;
+        this.hasMoved = hasMoved;
+    }
+
     public GameObject ModelReference
     {
         get => modelReference;
@@ -114,9 +124,13 @@ public class Snapshot : ScriptableObject
 {
     [SerializeField] private String saveName;
     [SerializeField] private SaveType saveType;
-    [SerializeField] private CharacterData[] playerObjects;
-    [SerializeField] private CharacterData[] aiObjects;
+    [SerializeField] private List<CharacterData> playerObjects;
+    [SerializeField] private List<CharacterData> aiObjects;
     [SerializeField] private LevelData levelData;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject aiPrefab;
+    
     
     public void LoadSave()
     { 
@@ -127,14 +141,49 @@ public class Snapshot : ScriptableObject
     {
         foreach (CharacterData playerCharacterData in playerObjects)
         {
-            Instantiate(playerCharacterData.ModelReference, playerCharacterData.Position, playerCharacterData.Rotation, GameObject.Find("Player Characters").transform);
+            GameObject target = Instantiate(playerCharacterData.ModelReference, playerCharacterData.Position, playerCharacterData.Rotation, GameObject.Find("Player Characters").transform);
+            PlayerController targetController = target.GetComponent<PlayerController>();
+            targetController.SetMoved(playerCharacterData.HasMoved);
+            targetController.SetAttacked(playerCharacterData.HasAttacked);
+            targetController.SetHealth(playerCharacterData.Health);
             GameObject.Find("TurnTracker").GetComponent<TurnCounter>()?.SetTurn(levelData.TurnCount);
         }
+        
+        foreach (CharacterData aiCharacterData in aiObjects)
+        {
+            GameObject target = Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("AICharacters").transform);
+            AIController targetController = target.GetComponent<AIController>();
+            targetController.SetMoved(aiCharacterData.HasMoved);
+            targetController.SetAttacked(aiCharacterData.HasAttacked);
+            targetController.SetHealth(aiCharacterData.Health);
+        }
+
+        GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
     }
 
     public void Save()
     {
+        GameObject[] playerGameObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] aiGameObjects = GameObject.FindGameObjectsWithTag("AI");
+
+        playerObjects.Clear();
+        foreach (GameObject playerObject in playerGameObjects)
+        {
+            PlayerController playerController = playerObject.GetComponent<PlayerController>();
+            CharacterData playerObjectData = new CharacterData(playerPrefab,playerObject.transform.position,playerObject.transform.rotation,playerController.GetHealth(),playerController.HasAttacked(),playerController.HasMoved());
+            playerObjects.Add(playerObjectData);
+        }
         
+        aiObjects.Clear();
+        foreach (GameObject aiObject in aiGameObjects)
+        {
+            AIController aiController = aiObject.GetComponent<AIController>();
+            if (aiController != null)
+            {
+                CharacterData aiObjectData = new CharacterData(playerPrefab,aiController.transform.position,aiController.transform.rotation,aiController.GetHealth(),aiController.HasAttacked(),aiController.HasMoved());
+                aiObjects.Add(aiObjectData);
+            }
+        }
     }
 
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     [SerializeField] private int initialHealth;
-    private int health;
+    private float health;
+    private bool _hasMovedAlready = false;
+    private bool _hasAttackedAlready = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,7 @@ public class AIController : MonoBehaviour
         
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health <= 0)
@@ -28,5 +30,35 @@ public class AIController : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public bool HasAttacked()
+    {
+        return _hasAttackedAlready;
+    }
+
+    public bool HasMoved()
+    {
+        return _hasMovedAlready;
+    }
+
+    public void SetMoved(bool hasMoved)
+    {
+        this._hasMovedAlready = hasMoved;
+    }
+
+    public void SetAttacked(bool hasAttacked)
+    {
+        this._hasAttackedAlready = hasAttacked;
+    }
+
+    public void SetHealth(float health)
+    {
+        this.health = health;
     }
 }

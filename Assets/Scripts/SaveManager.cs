@@ -5,9 +5,17 @@ using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum SaveSlot
+{
+    AutoSave,
+    Slot1,
+    Slot2,
+    Slot3
+}
 public class SaveManager : MonoBehaviour
 {
     [SerializeField] private Snapshot[] saveSlots;
+    [SerializeField] private SaveSlot saveSlot ;
 
     private void Start()
     {
@@ -22,16 +30,16 @@ public class SaveManager : MonoBehaviour
    
     private void Load()
     {
-        saveSlots[0].LoadSave();
+        saveSlots[(int)saveSlot].LoadSave();
     }
     private void Save()
     {
-        saveSlots[0].Save();
+        saveSlots[(int)saveSlot].Save();
     }
 
     private void AfterSceneLoading(Scene arg0, LoadSceneMode arg1)
     {
-        saveSlots[0].PostLoad();
+        saveSlots[(int)saveSlot].PostLoad();
     }
 
     private void OnGUI()

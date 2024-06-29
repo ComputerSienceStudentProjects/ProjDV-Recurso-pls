@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     
     private bool _hasMovedAlready = false;
+    private bool _hasAttackedAlready = false;
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
     private bool bShouldCheckIfReached = false;
@@ -190,5 +191,35 @@ public class PlayerController : MonoBehaviour
     {
         health += healingValue;
         Debug.Log("Got Healed, now have " + health + " health points");
+    }
+
+    public float GetHealth()
+    {
+        return health;
+    }
+
+    public bool HasAttacked()
+    {
+        return _hasAttackedAlready;
+    }
+
+    public bool HasMoved()
+    {
+        return _hasMovedAlready;
+    }
+
+    public void SetMoved(bool hasMoved)
+    {
+        this._hasMovedAlready = hasMoved;
+    }
+
+    public void SetAttacked(bool hasAttacked)
+    {
+        this._hasAttackedAlready = hasAttacked;
+    }
+
+    public void SetHealth(float health)
+    {
+        this.health = health;
     }
 }

@@ -182,4 +182,30 @@ public class PlayerInputSystem : MonoBehaviour
         Debug.Log("minDistance = " + minDistance);
         return initialOdds;
     }
+
+    public void SetTurnStatus(TurnState levelDataTurnState, PlayerPhaseStatus levelDataPlayerPhaseStatus)
+    {
+        switch (levelDataTurnState)
+        {
+            case TurnState.AI:
+                bMovementPhase = false;
+                bAttackPhase = false;
+                aiStartTurnEvent.Raise();
+                break;
+            case TurnState.Player:
+                switch(levelDataPlayerPhaseStatus)
+                {
+                    case PlayerPhaseStatus.Attack:
+                        bMovementPhase = false;
+                        bAttackPhase = true;
+                        break;
+                    case PlayerPhaseStatus.None:
+                    case PlayerPhaseStatus.Movement:
+                        bMovementPhase = true;
+                        bAttackPhase = false;
+                        break;
+                }
+                break;
+        }
+    }
 }
