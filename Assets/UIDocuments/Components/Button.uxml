@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="background-image: url(&quot;project://database/Assets/SVGs/Components/MainMenuButton.svg?fileID=7388822144124034973&amp;guid=797003680c84a204dba31d73410b68a0&amp;type=3#MainMenuButton&quot;); width: 100%; height: 100%;" />
+</ui:UXML>

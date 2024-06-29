@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Button" src="project://database/Assets/UIDocuments/Components/Button.uxml?fileID=9197481963319205126&amp;guid=9f2ebf21bb0cab84a96bb1c6ff964815&amp;type=3#Button" />
+    <ui:VisualElement style="background-image: url(&quot;project://database/Assets/SVGs/Main%20Menu.svg?fileID=7388822144124034973&amp;guid=c84d86d210186b14fa1328a075b1bf03&amp;type=3#Main Menu&quot;); width: 100%; height: 100%;" />
+    <ui:Instance template="Button" name="Button" style="width: 324px; height: 49px; position: absolute; top: 356px; left: 385px;" />
+    <ui:Instance template="Button" name="Button" style="width: 324px; height: 49px; position: absolute; top: 449px; left: 385px;" />
+    <ui:Instance template="Button" name="Button" style="width: 324px; height: 49px; position: absolute; top: 539px; left: 385px;" />
+</ui:UXML>
