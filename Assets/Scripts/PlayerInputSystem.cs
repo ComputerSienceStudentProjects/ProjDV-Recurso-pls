@@ -85,49 +85,18 @@ public class PlayerInputSystem : MonoBehaviour
         cameraController.LockOnGameObject(_playerController.gameObject);
     }
 
-    private void OnGUI()
+
+    public float GetOdds()
     {
-        if (bMovementPhase == false && bAttackPhase == false) return;
-        GUI.Label(new Rect(30,200,400,40),"Current phase: " + ((bMovementPhase == true) ? "Movement" : "Attack"));
-        if (GUI.Button(new Rect(30,160,200,40),"Finish Phase"))
-        {
-            if (bMovementPhase)
-            {
-                bMovementPhase = false;
-                bAttackPhase = true;
-                _playerController?.OnDeselected();
-                _playerController = null; 
-            }else if (bAttackPhase)
-            {
-                bAttackPhase = false;
-                _playerController?.OnDeselected();
-                _playerController = null;
-                _aiController = null;
-                aiStartTurnEvent.Raise();
-                foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
-                {
-                    playerObj.GetComponent<PlayerController>().ResetMovementFlag();
-                }
-            }
-        }
-        
-        if (_playerController == null || _aiController == null) return;
-        GUI.Box(new Rect(10, 10, 400, 400), "Attack character is of type ");
-        float attackOdds = CalculateAttackOdds();
-        GUI.Label(new Rect(30,40,400,40),"Attack Odds are of " + (attackOdds * 100f) + "%");
-        GUI.Label(new Rect(30,60,400,40),"Current phase: " + ((bMovementPhase == true) ? "Movement" : "Attack"));
-        if (GUI.Button(new Rect(30,80,200,40),"Confirm Attack"))
-        {
-            ConfirmAttack(attackOdds);
-        }
-        
-        if (GUI.Button(new Rect(30,120,200,40),"Cancel Attack"))
-        {
-            _aiController = null;
-            _playerController.OnDeselected();
-            _playerController = null;
-        }
+        if (_playerController == null || _aiController == null) return 0;
+        return CalculateAttackOdds();
     }
+    
+    public void ConfirmAttack()
+    {
+        ConfirmAttack(CalculateAttackOdds());
+    }
+    
     private void ConfirmAttack(float attackOdds)
     {
         float randomValue = Random.value;
@@ -206,6 +175,35 @@ public class PlayerInputSystem : MonoBehaviour
                         break;
                 }
                 break;
+        }
+    }
+
+    public void FinishPlayerPhase()
+    {
+        if (bMovementPhase)
+        {
+            bAttackPhase = true;
+            bMovementPhase = false;
+            _playerController = null;
+            _aiController = null;
+        }
+        else
+        {
+            FinishPlayerTurn();
+        }
+    }
+
+
+    public void FinishPlayerTurn()
+    {
+        bAttackPhase = false;
+        _playerController?.OnDeselected();
+        _playerController = null;
+        _aiController = null;
+        aiStartTurnEvent.Raise();
+        foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            playerObj.GetComponent<PlayerController>().ResetMovementFlag();
         }
     }
 }
