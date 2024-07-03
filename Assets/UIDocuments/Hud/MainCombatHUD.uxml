@@ -2,7 +2,9 @@
     <ui:Template name="TopHUD" src="project://database/Assets/UIDocuments/Components/TopHUD.uxml?fileID=9197481963319205126&amp;guid=72ca4a3ef5d43c944a7c2be9f6a1f0ef&amp;type=3#TopHUD" />
     <ui:Template name="CombatActions" src="project://database/Assets/UIDocuments/Components/CombatActions.uxml?fileID=9197481963319205126&amp;guid=58ce27949bc822546ab995631d4b5646&amp;type=3#CombatActions" />
     <ui:Template name="CombatPartyHUD" src="project://database/Assets/UIDocuments/Components/CombatPartyHUD.uxml?fileID=9197481963319205126&amp;guid=a1f27d057dc9e434db990fb919245e1d&amp;type=3#CombatPartyHUD" />
+    <ui:Template name="AttackUI" src="project://database/Assets/UIDocuments/Components/AttackUI.uxml?fileID=9197481963319205126&amp;guid=2b0e39f66ce181d45bed3717e21ec6a5&amp;type=3#AttackUI" />
     <ui:Instance template="TopHUD" name="TopHUD" style="position: absolute; width: 504px; height: 80px; top: -15px; left: 708px;" />
     <ui:Instance template="CombatActions" name="CombatActions" style="position: absolute; right: 0; bottom: 0; width: 232px; height: 130px;" />
     <ui:Instance template="CombatPartyHUD" name="CombatPartyHUD" style="position: absolute; left: 0; bottom: 0; width: 380px; height: 130px;" />
+    <ui:Instance template="AttackUI" name="AttackUI" style="position: absolute; right: 0; bottom: 473px; width: 134px; height: 98px; display: flex; visibility: hidden;" />
 </ui:UXML>

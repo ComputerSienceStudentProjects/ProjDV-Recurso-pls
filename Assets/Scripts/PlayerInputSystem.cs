@@ -12,6 +12,7 @@ public class PlayerInputSystem : MonoBehaviour
 
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameEvent aiStartTurnEvent;
+    [SerializeField] private GameEvent showAttacksEvent;
 
     private void Awake()
     {
@@ -39,13 +40,23 @@ public class PlayerInputSystem : MonoBehaviour
             }
             _aiController = hit.collider.GetComponent<AIController>();
             Debug.Log("both offender and target set");
-            //ShowAttacks();
+            showAttacksEvent.Raise();
             return;
         }
         PlayerController playerController = hit.collider.GetComponent<PlayerController>();
         if (playerController != null) HandlePlayerSelect(playerController);
     }
 
+    public void HandlePlayerStartEvent()
+    {
+        foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            playerObj.GetComponent<PlayerController>().ResetMovementFlag();
+        }
+        bMovementPhase = true;
+        bAttackPhase = false;
+    }
+    
     private void HandleMovementPhaseInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -154,6 +165,8 @@ public class PlayerInputSystem : MonoBehaviour
 
     public void SetTurnStatus(TurnState levelDataTurnState, PlayerPhaseStatus levelDataPlayerPhaseStatus)
     {
+        Debug.Log("levelDataTurnState -> " + levelDataTurnState);
+        Debug.Log("levelDataPlayerPhaseStatus -> " + levelDataPlayerPhaseStatus);
         switch (levelDataTurnState)
         {
             case TurnState.AI:
@@ -162,6 +175,8 @@ public class PlayerInputSystem : MonoBehaviour
                 aiStartTurnEvent.Raise();
                 break;
             case TurnState.Player:
+                GameObject.Find("UI").GetComponent<MainCombatUIController>()
+                    .setPlayerOnPhase(levelDataPlayerPhaseStatus);
                 switch(levelDataPlayerPhaseStatus)
                 {
                     case PlayerPhaseStatus.Attack:
@@ -205,5 +220,19 @@ public class PlayerInputSystem : MonoBehaviour
         {
             playerObj.GetComponent<PlayerController>().ResetMovementFlag();
         }
+    }
+
+    public TurnState GetTurnOwner()
+    {
+        if (!bMovementPhase && !bAttackPhase) return TurnState.AI;
+        return TurnState.Player;
+    }
+
+    public PlayerPhaseStatus GetPlayerPhase()
+    {
+        if (!bMovementPhase && !bAttackPhase) return PlayerPhaseStatus.None;
+        if (bMovementPhase) return PlayerPhaseStatus.Movement;
+        if (bAttackPhase) return PlayerPhaseStatus.Attack;
+        return PlayerPhaseStatus.None;
     }
 }

@@ -186,6 +186,12 @@ public class Snapshot : ScriptableObject
                 aiObjects.Add(aiObjectData);
             }
         }
+
+        TurnCounter turnCounter = GameObject.Find("TurnTracker").GetComponent<TurnCounter>();
+        PlayerInputSystem playerInputSystem = GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>();
+        levelData.LevelIndex = SceneManager.GetActiveScene().buildIndex;
+        levelData.TurnState = playerInputSystem.GetTurnOwner();
+        levelData.PlayerPhaseStatus = playerInputSystem.GetPlayerPhase();
     }
 
 }

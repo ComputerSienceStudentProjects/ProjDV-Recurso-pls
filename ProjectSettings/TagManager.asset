@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SaveManager
   - AI
+  - UIManager
   layers:
   - Default
   - TransparentFX
