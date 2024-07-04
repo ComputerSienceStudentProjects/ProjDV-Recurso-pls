@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -43,7 +40,9 @@ public class MainCombatUIController : MonoBehaviour
     public void HandleShowAttack()
     {
         float attackOdds = inputSystem.GetOdds();
+        int damage = inputSystem.GetDamage();
         rootVE.Q<Label>("attackOdds").text = (int)(attackOdds * 100) + "%";
+        rootVE.Q<Label>("damageNumber").text = damage + " DMG";
         rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Visible;
     }
     

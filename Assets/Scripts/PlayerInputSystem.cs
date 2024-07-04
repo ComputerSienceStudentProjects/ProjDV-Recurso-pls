@@ -235,4 +235,12 @@ public class PlayerInputSystem : MonoBehaviour
         if (bAttackPhase) return PlayerPhaseStatus.Attack;
         return PlayerPhaseStatus.None;
     }
+
+    public int GetDamage()
+    {
+        if (_playerController == null) return -1;
+        if (_aiController == null) return -1;
+
+        return _playerController.GetBaseDamage();
+    }
 }

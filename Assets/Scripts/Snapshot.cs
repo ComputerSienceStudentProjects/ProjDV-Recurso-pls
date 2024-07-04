@@ -15,10 +15,11 @@ public class CharacterData
     [SerializeField] private Vector3 position;
     [SerializeField] private Quaternion rotation;
     [SerializeField] private float health;
+    [SerializeField] private int baseDMG;
     [SerializeField] private bool hasAttacked;
     [SerializeField] private bool hasMoved;
 
-    public CharacterData(GameObject modelReference, Vector3 position, Quaternion rotation, float health, bool hasAttacked, bool hasMoved)
+    public CharacterData(GameObject modelReference, Vector3 position, Quaternion rotation, float health, bool hasAttacked, bool hasMoved,int baseDMG)
     {
         this.modelReference = modelReference;
         this.position = position;
@@ -26,6 +27,7 @@ public class CharacterData
         this.health = health;
         this.hasAttacked = hasAttacked;
         this.hasMoved = hasMoved;
+        this.baseDMG = baseDMG;
     }
 
     public GameObject ModelReference
@@ -34,6 +36,12 @@ public class CharacterData
         set => modelReference = value;
     }
 
+    public int BaseDamage
+    {
+        get => baseDMG;
+        set => baseDMG = value;
+    }
+    
     public Vector3 Position
     {
         get => position;
@@ -147,6 +155,7 @@ public class Snapshot : ScriptableObject
             targetController.SetMoved(playerCharacterData.HasMoved);
             targetController.SetAttacked(playerCharacterData.HasAttacked);
             targetController.SetHealth(playerCharacterData.Health);
+            targetController.SetBaseDMG(playerCharacterData.BaseDamage);
             GameObject.Find("TurnTracker").GetComponent<TurnCounter>()?.SetTurn(levelData.TurnCount);
         }
         
@@ -157,6 +166,7 @@ public class Snapshot : ScriptableObject
             targetController.SetMoved(aiCharacterData.HasMoved);
             targetController.SetAttacked(aiCharacterData.HasAttacked);
             targetController.SetHealth(aiCharacterData.Health);
+            targetController.setBaseDmg(aiCharacterData.BaseDamage);
         }
 
         GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
@@ -172,7 +182,7 @@ public class Snapshot : ScriptableObject
         foreach (GameObject playerObject in playerGameObjects)
         {
             PlayerController playerController = playerObject.GetComponent<PlayerController>();
-            CharacterData playerObjectData = new CharacterData(playerPrefab,playerObject.transform.position,playerObject.transform.rotation,playerController.GetHealth(),playerController.HasAttacked(),playerController.HasMoved());
+            CharacterData playerObjectData = new CharacterData(playerPrefab,playerObject.transform.position,playerObject.transform.rotation,playerController.GetHealth(),playerController.HasAttacked(),playerController.HasMoved(),playerController.GetBaseDamage());
             playerObjects.Add(playerObjectData);
         }
         
@@ -182,7 +192,9 @@ public class Snapshot : ScriptableObject
             AIController aiController = aiObject.GetComponent<AIController>();
             if (aiController != null)
             {
-                CharacterData aiObjectData = new CharacterData(playerPrefab,aiController.transform.position,aiController.transform.rotation,aiController.GetHealth(),aiController.HasAttacked(),aiController.HasMoved());
+                CharacterData aiObjectData = new CharacterData(playerPrefab, aiController.transform.position,
+                    aiController.transform.rotation, aiController.GetHealth(), aiController.HasAttacked(),
+                    aiController.HasMoved(), aiController.getBaseDMG());
                 aiObjects.Add(aiObjectData);
             }
         }
@@ -193,5 +205,4 @@ public class Snapshot : ScriptableObject
         levelData.TurnState = playerInputSystem.GetTurnOwner();
         levelData.PlayerPhaseStatus = playerInputSystem.GetPlayerPhase();
     }
-
 }

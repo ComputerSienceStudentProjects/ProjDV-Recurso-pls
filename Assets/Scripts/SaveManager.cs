@@ -11,6 +11,7 @@ public enum SaveSlot
     Slot2,
     Slot3
 }
+
 public class SaveManager : MonoBehaviour
 {
     [SerializeField] private Snapshot[] saveSlots;

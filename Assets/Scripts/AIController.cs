@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     [SerializeField] private int initialHealth;
+    private int baseDMG;
     private float health;
     private bool _hasMovedAlready = false;
     private bool _hasAttackedAlready = false;
@@ -60,5 +61,15 @@ public class AIController : MonoBehaviour
     public void SetHealth(float health)
     {
         this.health = health;
+    }
+
+    public int getBaseDMG()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void setBaseDmg(int baseDamage)
+    {
+        baseDamage = baseDMG;
     }
 }

@@ -222,4 +222,9 @@ public class PlayerController : MonoBehaviour
     {
         this.health = health;
     }
+
+    public void SetBaseDMG(int baseDamage)
+    {
+        this.baseDamage = baseDamage;
+    }
 }
