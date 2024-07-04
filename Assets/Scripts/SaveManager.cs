@@ -49,6 +49,10 @@ public class SaveManager : MonoBehaviour
         saveSlots[(int)saveSlot].PostLoad();
     }
 
+    public void SaveRequest()
+    {
+        Save();
+    }
     private void OnGUI()
     {
         if (GUI.Button(new Rect(10, 10, 200, 50), "Load Snapshot"))

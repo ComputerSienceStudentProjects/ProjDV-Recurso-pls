@@ -130,12 +130,16 @@ public enum SaveType
 [CreateAssetMenu(menuName = "Scriptables/Snapshot",fileName = "New Snapshot")]
 public class Snapshot : ScriptableObject
 {
+    [Header("Save Metadata")]
     [SerializeField] private String saveName;
     [SerializeField] private SaveType saveType;
+    [Header("Actor's Data")]
     [SerializeField] private List<CharacterData> playerObjects;
     [SerializeField] private List<CharacterData> aiObjects;
+    [Header("Level Data")]
     [SerializeField] private LevelData levelData;
     [Header("Prefabs")]
+    [SerializeField] private GameEvent updateHPBarsEvent;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject aiPrefab;
     

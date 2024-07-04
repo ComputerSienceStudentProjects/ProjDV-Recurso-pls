@@ -1,3 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/SVGs/Components/PartyHUD.svg?fileID=7388822144124034973&amp;guid=360e47e269cb79240a054cf0d148d4eb&amp;type=3#PartyHUD&quot;);" />
+    <ui:Template name="CharacterPartyHUD" src="project://database/Assets/UIDocuments/Components/CharacterPartyHUD.uxml?fileID=9197481963319205126&amp;guid=5d2d258e65ac69046a490bf786101346&amp;type=3#CharacterPartyHUD" />
+    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/SVGs/Components/PartyHUD.svg?fileID=7388822144124034973&amp;guid=61839026e110c9f44924f6a7520286ec&amp;type=3#PartyHUD&quot;);" />
+    <ui:Instance template="CharacterPartyHUD" name="Character1VE" style="width: 74px; height: 74px; position: absolute; top: 13px; left: 24px;" />
+    <ui:Instance template="CharacterPartyHUD" name="Character2VE" style="width: 74px; height: 74px; position: absolute; top: 13px; left: 113px;" />
+    <ui:Instance template="CharacterPartyHUD" name="Character3VE" style="width: 74px; height: 74px; position: absolute; top: 13px; left: 197px;" />
+    <ui:Instance template="CharacterPartyHUD" name="Character4VE" style="width: 74px; height: 74px; position: absolute; top: 13px; left: 282px;" />
 </ui:UXML>

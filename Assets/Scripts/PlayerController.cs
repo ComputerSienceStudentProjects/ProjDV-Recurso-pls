@@ -27,8 +27,11 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
     private bool bShouldCheckIfReached = false;
-    private float health;
+    [SerializeField] private float health;
     private NavMeshAgent _agent;
+    
+    
+    [SerializeField] private GameEvent updateHPBarsEvent;
     
     private void Awake()
     {
@@ -148,6 +151,7 @@ public class PlayerController : MonoBehaviour
         health -= damage;
         if (health <= 0)
             Destroy(gameObject);
+        updateHPBarsEvent.Raise();
     }
 
     public async void PlayAttackAnim(Vector3 aiTargetPos,AIController aiTargetController,bool sucess)
@@ -226,5 +230,10 @@ public class PlayerController : MonoBehaviour
     public void SetBaseDMG(int baseDamage)
     {
         this.baseDamage = baseDamage;
+    }
+
+    public float GetHealthPercentage()
+    {
+        return health / initialHealth;
     }
 }

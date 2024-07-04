@@ -65,7 +65,7 @@ public class AIController : MonoBehaviour
 
     public int getBaseDMG()
     {
-        throw new System.NotImplementedException();
+        return baseDMG;
     }
 
     public void setBaseDmg(int baseDamage)

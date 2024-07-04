@@ -86,6 +86,21 @@ public class MainCombatUIController : MonoBehaviour
         rootVE.Q<Label>("PlayerStatus").style.color = Color.gray;
     }
 
+    public void UpdateHPBars()
+    {
+        int playerIndex = 1;
+        GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject playerObject in playerObjects)
+        {
+            VisualElement partyRoot = rootVE.Q<VisualElement>("CombatPartyHUD");
+            VisualElement characterVE = partyRoot.Q<VisualElement>("Character" + playerIndex + "VE");
+            PlayerController playerController = playerObject.GetComponent<PlayerController>();
+            float sizeMultiplier = playerController.GetHealthPercentage();
+            characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
+            playerIndex++;
+        }
+    }
+
     public void setPlayerOnPhase(PlayerPhaseStatus levelDataPlayerPhaseStatus)
     {
         ChangeToPlayerTurn();

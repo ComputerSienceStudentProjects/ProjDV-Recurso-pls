@@ -18,22 +18,37 @@ MonoBehaviour:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
     position: {x: -3.4754071, y: 1.4379184, z: -2.922842}
     rotation: {x: -0, y: 0.9999016, z: -0, w: 0.014029476}
-    health: 10
-    hasAttacked: 0
+    health: 5
     baseDMG: 20
+    hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -6.8843966, y: 1.4379184, z: -3.9784164}
+    position: {x: -5.862797, y: 1.4379184, z: -3.6669316}
     rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
-    health: 10
-    hasAttacked: 0
+    health: 7
     baseDMG: 20
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: -8.797021, y: 1.4379184, z: -3.4194767}
+    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
+    health: 1
+    baseDMG: 20
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: -6.4870214, y: 1.4379184, z: 0.72052336}
+    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
+    health: 3
+    baseDMG: 20
+    hasAttacked: 0
     hasMoved: 0
   aiObjects: []
   levelData:
-    levelIndex: 0
-    turnCount: 10
+    levelIndex: 1
+    turnCount: 0
     turnState: 0
     playerPhaseStatus: 1
+  updateHPBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
   playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
   aiPrefab: {fileID: 0}

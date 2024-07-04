@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Icon" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/SVGs/Components/Character.svg?fileID=7388822144124034973&amp;guid=195b5f9c18a9d574da82c06fed064c9b&amp;type=3#Character&quot;);" />
+    <ui:VisualElement name="HPBar" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/SVGs/Components/CharacterHP.svg?fileID=7388822144124034973&amp;guid=5281f6372810d4b439af3f99780b6e46&amp;type=3#CharacterHP&quot;); width: 100%; bottom: 0; height: 5px;" />
+</ui:UXML>
