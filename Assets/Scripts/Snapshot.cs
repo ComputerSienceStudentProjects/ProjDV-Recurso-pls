@@ -175,6 +175,7 @@ public class Snapshot : ScriptableObject
 
         GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Reveal");
+        updateHPBarsEvent?.Raise();
     }
 
     public void Save()
@@ -208,5 +209,6 @@ public class Snapshot : ScriptableObject
         levelData.LevelIndex = SceneManager.GetActiveScene().buildIndex;
         levelData.TurnState = playerInputSystem.GetTurnOwner();
         levelData.PlayerPhaseStatus = playerInputSystem.GetPlayerPhase();
+        
     }
 }
