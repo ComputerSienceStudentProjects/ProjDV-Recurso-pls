@@ -226,7 +226,6 @@ public class Snapshot : ScriptableObject
         levelData.LevelIndex = SceneManager.GetActiveScene().buildIndex;
         levelData.TurnState = playerInputSystem.GetTurnOwner();
         levelData.PlayerPhaseStatus = playerInputSystem.GetPlayerPhase();
-        
     }
 
 
@@ -244,6 +243,7 @@ public class Snapshot : ScriptableObject
             characterData.Position = Vector3.zero;
             characterData.Rotation = Quaternion.identity;
         }
+        
         foreach (CharacterData aiCharacterData in aiObjects)
         {
             aiCharacterData.HasAttacked = false;
