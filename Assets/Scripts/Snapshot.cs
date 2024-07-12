@@ -152,20 +152,20 @@ public class Snapshot : ScriptableObject
 
     public void PostLoad()
     {
+        Debug.Log("playerObjects contains data for " + playerObjects.Count + " entries");
         foreach (CharacterData playerCharacterData in playerObjects)
         {
-            GameObject target = Instantiate(playerCharacterData.ModelReference, playerCharacterData.Position, playerCharacterData.Rotation, GameObject.Find("Player Characters").transform);
+            GameObject target = (playerCharacterData.Position == Vector3.zero) ? SpawnNewEntity(playerCharacterData,false) : Instantiate(playerCharacterData.ModelReference, playerCharacterData.Position, playerCharacterData.Rotation, GameObject.Find("Player Characters").transform);
             PlayerController targetController = target.GetComponent<PlayerController>();
             targetController.SetMoved(playerCharacterData.HasMoved);
             targetController.SetAttacked(playerCharacterData.HasAttacked);
             targetController.SetHealth(playerCharacterData.Health);
             targetController.SetBaseDMG(playerCharacterData.BaseDamage);
-            GameObject.Find("TurnTracker").GetComponent<TurnCounter>()?.SetTurn(levelData.TurnCount);
         }
         
         foreach (CharacterData aiCharacterData in aiObjects)
         {
-            GameObject target = Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("AICharacters").transform);
+            GameObject target = (aiCharacterData.Position == Vector3.zero) ? SpawnNewEntity(aiCharacterData,true) : Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("Player Characters").transform);
             AIController targetController = target.GetComponent<AIController>();
             targetController.SetMoved(aiCharacterData.HasMoved);
             targetController.SetAttacked(aiCharacterData.HasAttacked);
@@ -173,9 +173,23 @@ public class Snapshot : ScriptableObject
             targetController.setBaseDmg(aiCharacterData.BaseDamage);
         }
 
+        GameObject.Find("TurnTracker").GetComponent<TurnCounter>()?.SetTurn(levelData.TurnCount);
         GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Reveal");
         updateHPBarsEvent?.Raise();
+    }
+
+    private GameObject SpawnNewEntity(CharacterData data,bool isAI)
+    {
+        Debug.Log("Finding an  empty spawn");
+        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag(isAI?"SpawnPointAI":"SpawnPointPlayer"))
+        {
+            if (spawnPoint.transform.childCount == 0)
+            {
+                return Instantiate(data.ModelReference, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);
+            }
+        }
+        return null;
     }
 
     public void Save()
@@ -210,5 +224,30 @@ public class Snapshot : ScriptableObject
         levelData.TurnState = playerInputSystem.GetTurnOwner();
         levelData.PlayerPhaseStatus = playerInputSystem.GetPlayerPhase();
         
+    }
+
+
+    public void ClearSnapshot()
+    {
+        levelData.LevelIndex = 2;
+        levelData.TurnState = TurnState.Player;
+        levelData.PlayerPhaseStatus = PlayerPhaseStatus.Movement;
+
+        foreach (CharacterData characterData in playerObjects)
+        {
+            characterData.HasAttacked = false;
+            characterData.HasMoved = false;
+            characterData.Health = 10;
+            characterData.Position = Vector3.zero;
+            characterData.Rotation = Quaternion.identity;
+        }
+        foreach (CharacterData aiCharacterData in aiObjects)
+        {
+            aiCharacterData.HasAttacked = false;
+            aiCharacterData.HasMoved = false;
+            aiCharacterData.Health = 10;
+            aiCharacterData.Position = Vector3.zero;
+            aiCharacterData.Rotation = Quaternion.identity;
+        }
     }
 }

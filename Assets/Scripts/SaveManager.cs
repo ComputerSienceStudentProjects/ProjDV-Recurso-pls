@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 public enum SaveSlot
@@ -28,7 +29,7 @@ public class SaveManager : MonoBehaviour
         SceneManager.sceneLoaded += AfterSceneLoading;
     }
    
-    private void Load()
+    public void Load()
     {
         
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Unreveal");
@@ -63,5 +64,27 @@ public class SaveManager : MonoBehaviour
         {
             Save();
         }
+        if (GUI.Button(new Rect(10, 110, 200, 50), "reset Snapshot"))
+        {
+            StartNewGame();
+        }
+    }
+
+    public void StartNewGame()
+    {
+        saveSlots[(int)saveSlot].ClearSnapshot();
+        Load();
+    }
+
+    public void SetSlot(int slot)
+    {
+        if (slot < 0 || slot >= Enum.GetValues(typeof(SaveSlot)).Length)
+        {
+            Debug.LogError("Invalid save slot number");
+            return;
+        }
+
+        saveSlot = (SaveSlot)slot;
+        Debug.Log("Save slot set to: " + saveSlot);
     }
 }

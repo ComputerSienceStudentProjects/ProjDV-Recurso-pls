@@ -11,6 +11,7 @@ public class MainCombatUIController : MonoBehaviour
     [SerializeField] private PlayerInputSystem inputSystem;
     
     private VisualElement rootVE;
+    
     void Start()
     {
         if (GameObject.FindGameObjectsWithTag("UIManager").Length > 1)
@@ -22,17 +23,16 @@ public class MainCombatUIController : MonoBehaviour
         rootVE = _uiDocument.rootVisualElement;
         rootVE.Q<Button>("NextPhaseButton").clicked += NextPhaseAction;
         rootVE.Q<Button>("NextTurnButton").clicked += NextTurnAction;
-        
-        //TODO IMPLEMENT
         rootVE.Q<Button>("ConfirmAttackButton").clicked += ConfirmAttack;
-        
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += FindReferences;
-
     }
 
     private void FindReferences(Scene arg0, LoadSceneMode arg1)
     {
+        Debug.Log("Finding references");
+        _uiDocument = GetComponent<UIDocument>();
+        rootVE = _uiDocument.rootVisualElement;
         turnCounter = GameObject.Find("TurnTracker").GetComponent<TurnCounter>();
         inputSystem = GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>();
     }
@@ -75,6 +75,8 @@ public class MainCombatUIController : MonoBehaviour
     public void UpdateTurnCounter()
     {
         Debug.Log("TURN " + turnCounter.GetTurnCount());
+        if (rootVE == null) 
+            FindReferences(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         rootVE.Q<Label>("TurnCounter").text = "TURN " + turnCounter.GetTurnCount();
     }
     
@@ -86,8 +88,10 @@ public class MainCombatUIController : MonoBehaviour
         rootVE.Q<Label>("PlayerStatus").style.color = Color.gray;
     }
 
-    public void UpdateHPBars()
+    public void UpdateHpBars()
     {
+        if (rootVE == null)
+            FindReferences(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         int playerIndex = 1;
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject playerObject in playerObjects)
