@@ -139,9 +139,12 @@ public class Snapshot : ScriptableObject
     [Header("Level Data")]
     [SerializeField] private LevelData levelData;
     [Header("Prefabs")]
-    [SerializeField] private GameEvent updateHPBarsEvent;
+    [SerializeField] private GameEvent updateHpBarsEvent;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject aiPrefab;
+    [SerializeField] private float playTime;
+    [SerializeField] private float lastPlayed;
+    [SerializeField] private float lasSaved;
     
     
     public void LoadSave()
@@ -176,7 +179,7 @@ public class Snapshot : ScriptableObject
         GameObject.Find("TurnTracker").GetComponent<TurnCounter>()?.SetTurn(levelData.TurnCount);
         GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Reveal");
-        updateHPBarsEvent?.Raise();
+        updateHpBarsEvent?.Raise();
     }
 
     private GameObject SpawnNewEntity(CharacterData data,bool isAI)
