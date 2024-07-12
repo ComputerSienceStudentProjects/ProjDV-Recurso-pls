@@ -33,13 +33,8 @@ public class PlayerInputSystem : MonoBehaviour
         AIController aiTarget = hit.collider.GetComponent<AIController>();
         if (aiTarget != null)
         {
-            if (_playerController == null)
-            {
-                Debug.Log("Clicked on AI TARGET Before selecting a prty chracter");
-                return;
-            }
+            if (_playerController == null)return;
             _aiController = hit.collider.GetComponent<AIController>();
-            Debug.Log("both offender and target set");
             showAttacksEvent.Raise();
             return;
         }
@@ -114,8 +109,6 @@ public class PlayerInputSystem : MonoBehaviour
         if (attackOdds > randomValue)
         {
             _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController,true);
-
-            Debug.Log("Attack successful with odds of " + (attackOdds * 100f) + "%");
             _playerController.OnDeselected();
             _playerController = null;
             _aiController = null;
@@ -123,7 +116,6 @@ public class PlayerInputSystem : MonoBehaviour
         else
         {
             _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController,false);
-            Debug.Log("Attack failed. Random value was " + randomValue + " and attack odds were " + attackOdds);
             _playerController.OnDeselected();
             _playerController = null;
             _aiController = null;
@@ -133,14 +125,10 @@ public class PlayerInputSystem : MonoBehaviour
     private float CalculateAttackOdds()
     {
         float initialOdds = 0;
-        RaycastHit hitInfo;
-
         float minDistance = float.MaxValue;
-
-        Vector3 playerPos = _playerController.GetPosition();
         Vector3 aiPos = _aiController.GetPosition();
 
-        if (Physics.Linecast(_playerController.GetCastPoint(), aiPos, out hitInfo))
+        if (Physics.Linecast(_playerController.GetCastPoint(), aiPos, out var hitInfo))
         {
             if (hitInfo.collider.GetComponent<AIController>() == _aiController)
             {
@@ -159,14 +147,11 @@ public class PlayerInputSystem : MonoBehaviour
             float distanceFactor = 1 - (minDistance / maxRange);
             initialOdds *= distanceFactor;
         }
-        Debug.Log("minDistance = " + minDistance);
         return initialOdds;
     }
 
     public void SetTurnStatus(TurnState levelDataTurnState, PlayerPhaseStatus levelDataPlayerPhaseStatus)
     {
-        Debug.Log("levelDataTurnState -> " + levelDataTurnState);
-        Debug.Log("levelDataPlayerPhaseStatus -> " + levelDataPlayerPhaseStatus);
         switch (levelDataTurnState)
         {
             case TurnState.AI:

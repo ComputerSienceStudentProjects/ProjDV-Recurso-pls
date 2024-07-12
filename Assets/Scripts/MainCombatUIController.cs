@@ -74,7 +74,6 @@ public class MainCombatUIController : MonoBehaviour
 
     public void UpdateTurnCounter()
     {
-        Debug.Log("TURN " + turnCounter.GetTurnCount());
         if (rootVE == null) 
             FindReferences(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         rootVE.Q<Label>("TurnCounter").text = "TURN " + turnCounter.GetTurnCount();

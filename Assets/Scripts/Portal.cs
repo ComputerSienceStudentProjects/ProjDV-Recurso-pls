@@ -1,10 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/**
+ * <summary>
+ *  Class for controlling the portals between levels
+ * </summary>
+ * <version>
+ *  12/07/2024
+ * </version>
+ * <author>
+ *  João Gouveia (joao.c.gouveia10@gmail.com)
+ * </author>
+ */
 public class Portal : MonoBehaviour
 {
     [SerializeField] private SceneAsset target;

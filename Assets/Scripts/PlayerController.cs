@@ -80,7 +80,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnSelected()
     {
-        Debug.Log("Here!");
         movementCircleObject.SetActive(true);
         bSelected = true;
         selectedMaterial.SetFloat("_OutlineSize", 1.01f);
@@ -133,7 +132,6 @@ public class PlayerController : MonoBehaviour
     private void DrawPath(NavMeshPath path)
     {
         var positions = path.corners;
-        Debug.Log("Path has " + positions.Length + "corners");
         _pathLineRenderer.positionCount = positions.Length;
         for (int i = 0; i < positions.Length; i++)
         {
@@ -194,7 +192,6 @@ public class PlayerController : MonoBehaviour
     public void AddHp(float healingValue)
     {
         health += healingValue;
-        Debug.Log("Got Healed, now have " + health + " health points");
     }
 
     public float GetHealth()
@@ -214,12 +211,12 @@ public class PlayerController : MonoBehaviour
 
     public void SetMoved(bool hasMoved)
     {
-        this._hasMovedAlready = hasMoved;
+        _hasMovedAlready = hasMoved;
     }
 
     public void SetAttacked(bool hasAttacked)
     {
-        this._hasAttackedAlready = hasAttacked;
+        _hasAttackedAlready = hasAttacked;
     }
 
     public void SetHealth(float health)
