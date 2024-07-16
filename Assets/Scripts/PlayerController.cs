@@ -192,6 +192,10 @@ public class PlayerController : MonoBehaviour
     public void AddHp(float healingValue)
     {
         health += healingValue;
+        if (health > initialHealth)
+        {
+            health = initialHealth;
+        }
     }
 
     public float GetHealth()

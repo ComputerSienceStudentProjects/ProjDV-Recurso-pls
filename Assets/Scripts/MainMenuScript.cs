@@ -19,6 +19,18 @@ public class MainMenuScript : MonoBehaviour
         saveManager.SetSlot(1);
         saveManager.Load();
     }
+    
+    public void LoadSave2()
+    {
+        saveManager.SetSlot(2);
+        saveManager.Load();
+    }
+    
+    public void LoadSave3()
+    {
+        saveManager.SetSlot(3);
+        saveManager.Load();
+    }
 
     private void OnGUI()
     {
