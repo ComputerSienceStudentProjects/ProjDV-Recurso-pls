@@ -16,39 +16,42 @@ MonoBehaviour:
   saveType: 0
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -3.4754071, y: 1.4379184, z: -2.922842}
-    rotation: {x: -0, y: 0.9999016, z: -0, w: 0.014029476}
+    position: {x: -13.500761, y: 1.4379184, z: -3.2135048}
+    rotation: {x: -0, y: 0.8045278, z: -0, w: 0.593915}
     health: 5
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 0
+    hasMoved: 1
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -5.862797, y: 1.4379184, z: -3.6669316}
-    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
+    position: {x: -14.267681, y: 1.4379184, z: -0.97083807}
+    rotation: {x: -0, y: 0.31356427, z: -0, w: 0.949567}
     health: 7
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 0
+    hasMoved: 1
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -8.797021, y: 1.4379184, z: -3.4194767}
-    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
+    position: {x: -12.213521, y: 1.4379184, z: -7.4510384}
+    rotation: {x: -0, y: 0.61335397, z: -0, w: 0.7898082}
     health: 1
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 0
+    hasMoved: 1
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -6.4870214, y: 1.4379184, z: 0.72052336}
-    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
-    health: 3
+    position: {x: -13.720478, y: 1.4379184, z: 4.24928}
+    rotation: {x: -0, y: 0.6283625, z: -0, w: 0.7779207}
+    health: 2
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 0
+    hasMoved: 1
   aiObjects: []
   levelData:
     levelIndex: 1
     turnCount: 0
     turnState: 0
     playerPhaseStatus: 1
-  updateHPBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
+  playTime: 0
+  lastPlayed: 0
+  lasSaved: 0
+  updateHpBarsEvent: {fileID: 0}
   playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
   aiPrefab: {fileID: 0}
