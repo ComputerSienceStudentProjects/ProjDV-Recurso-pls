@@ -6,7 +6,7 @@ public class AIControllable : MonoBehaviour
 {
     [SerializeField] private int initialHealth;
     private int baseDMG;
-    private float health;
+    [SerializeField] private float health;
     private bool _hasMovedAlready = false;
     private bool _hasAttackedAlready = false;
 

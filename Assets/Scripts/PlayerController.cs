@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject castPoint;
     [SerializeField] private CameraController cameraController;
 
+    private AIControllable _aiTarget;
     private bool _hasMovedAlready = false;
     private bool _hasAttackedAlready = false;
     private Animator _animator;
@@ -156,22 +157,12 @@ public class PlayerController : MonoBehaviour
     {
         await RotateTowards(aiTargetPos);
         _animator.SetTrigger("Attack");
-        await isDoneAttaking();
-        if (!sucess) return;
-        aiTargetController.TakeDamage(GetBaseDamage());
+        _aiTarget = aiTargetController ? aiTargetController : null;
     }
 
-
-    private async Task isDoneAttaking()
+    public void PerformAttack()
     {
-        while (true)
-        {
-            if (_animator.GetBool("Attack"))
-            {
-                await Task.Yield();
-            }
-            break;
-        }
+        _aiTarget.TakeDamage(GetBaseDamage());
     }
 
     public Vector3 GetPosition()

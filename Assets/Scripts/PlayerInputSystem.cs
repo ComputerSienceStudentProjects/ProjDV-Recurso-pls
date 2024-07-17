@@ -131,7 +131,7 @@ public class PlayerInputSystem : MonoBehaviour
 
         if (Physics.Linecast(_playerController.GetCastPoint(), aiPos, out var hitInfo))
         {
-            if (hitInfo.collider.GetComponent<AIController>() == _aiControllable)
+            if (hitInfo.collider.GetComponent<AIControllable>() == _aiControllable)
             {
                 initialOdds = 1f;
                 minDistance = hitInfo.distance;

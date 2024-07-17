@@ -16,21 +16,49 @@ MonoBehaviour:
   saveType: 0
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -3.5776916, y: 1.4379184, z: 0.71975946}
-    rotation: {x: -0, y: -0.5716134, z: -0, w: 0.8205231}
+    position: {x: -18.04, y: 1.4379184, z: -1.79}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
     health: 10
-    baseDMG: 0
+    baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
-  aiObjects: []
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: 10.992979, y: 1.4379184, z: -6.0600004}
+    rotation: {x: -0, y: 0.7071067, z: -0, w: 0.70710695}
+    health: 10
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: -18.04, y: 1.4379184, z: -8.940001}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    health: 10
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: -18.04, y: 1.4379184, z: 3.32}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    health: 10
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
+  aiObjects:
+  - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    health: 10
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
   levelData:
-    levelIndex: 2
+    levelIndex: 1
     turnCount: 0
     turnState: 0
-    playerPhaseStatus: 0
-  updateHpBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
-  playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-  aiPrefab: {fileID: 0}
+    playerPhaseStatus: 2
   playTime: 0
   lastPlayed: 0
   lasSaved: 0
+  updateHpBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
+  playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+  aiPrefab: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
