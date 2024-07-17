@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Material walkingMaterial;
     [SerializeField] private GameObject castPoint;
     [SerializeField] private CameraController cameraController;
-    
+
     private bool _hasMovedAlready = false;
     private bool _hasAttackedAlready = false;
     private Animator _animator;
@@ -29,26 +29,26 @@ public class PlayerController : MonoBehaviour
     private bool bShouldCheckIfReached = false;
     [SerializeField] private float health;
     private NavMeshAgent _agent;
-    
-    
+
+
     [SerializeField] private GameEvent updateHPBarsEvent;
-    
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         cameraController = Camera.main.gameObject.GetComponent<CameraController>();
-        
-       
-        
+
+
+
         _pathLineRenderer = GetComponent<LineRenderer>();
         health = initialHealth;
-        
-        
+
+
         selectedMaterial = meshRenderer.materials[1];
         walkingMaterial = meshRenderer.materials[2];
     }
-    
+
     private bool ReachedDestinationOrGaveUp()
     {
         if (!_agent.pathPending)
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    
+
     private void Update()
     {
         movementCircleObject.transform.localScale = new Vector3(maxMovementRange * 2f, maxMovementRange * 2f, 1f);
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         if (!ReachedDestinationOrGaveUp()) return;
         cameraController.UnlockOnGameObject();
         _pathLineRenderer.positionCount = 0;
-        _animator.SetBool("isMoving",false);
+        _animator.SetBool("isMoving", false);
         walkingMaterial.SetFloat("_OutlineSize", 0f);
         if (bSelected) selectedMaterial.SetFloat("_OutlineSize", 1.01f);
         bShouldCheckIfReached = false;
@@ -91,17 +91,17 @@ public class PlayerController : MonoBehaviour
         bSelected = false;
         selectedMaterial.SetFloat("_OutlineSize", 0f);
     }
-    
+
     public async void PerformMove(Vector3 point)
     {
         if (_hasMovedAlready) return;
         if (Vector3.Distance(transform.position, point) > maxMovementRange) return;
         OnDeselected();
         var navMeshPath = new NavMeshPath();
-        NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas,navMeshPath);
+        NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas, navMeshPath);
         if (navMeshPath.status == NavMeshPathStatus.PathInvalid) return;
         await RotateTowards(navMeshPath.corners[navMeshPath.corners.Length - 1]);
-        _animator.SetBool("isMoving",true);
+        _animator.SetBool("isMoving", true);
         _agent.SetPath(navMeshPath);
         DrawPath(navMeshPath);
         bShouldCheckIfReached = true;
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
         _pathLineRenderer.positionCount = positions.Length;
         for (int i = 0; i < positions.Length; i++)
         {
-            _pathLineRenderer.SetPosition(i, positions[i] + new Vector3(0,0.5f,0));
+            _pathLineRenderer.SetPosition(i, positions[i] + new Vector3(0, 0.5f, 0));
         }
     }
 
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
         updateHPBarsEvent.Raise();
     }
 
-    public async void PlayAttackAnim(Vector3 aiTargetPos,AIController aiTargetController,bool sucess)
+    public async void PlayAttackAnim(Vector3 aiTargetPos, AIControllable aiTargetController, bool sucess)
     {
         await RotateTowards(aiTargetPos);
         _animator.SetTrigger("Attack");
@@ -167,13 +167,13 @@ public class PlayerController : MonoBehaviour
         while (true)
         {
             if (_animator.GetBool("Attack"))
-            { 
+            {
                 await Task.Yield();
             }
             break;
         }
     }
-    
+
     public Vector3 GetPosition()
     {
         return transform.position;
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
     {
         return baseDamage;
     }
-    
+
     public float GetMaxRange()
     {
         return maxAttackRange;

@@ -68,7 +68,7 @@ public class CharacterData
      *  Base constructor for CharacterData
      * </summary>
      */
-    public CharacterData(GameObject modelReference, Vector3 position, Quaternion rotation, float health, bool hasAttacked, bool hasMoved,int baseDMG)
+    public CharacterData(GameObject modelReference, Vector3 position, Quaternion rotation, float health, bool hasAttacked, bool hasMoved, int baseDMG)
     {
         this.modelReference = modelReference;
         this.position = position;
@@ -78,7 +78,7 @@ public class CharacterData
         this.hasMoved = hasMoved;
         this.baseDMG = baseDMG;
     }
-    
+
     /**
      * <summary>
      *  Public get/set for ModelReference
@@ -100,7 +100,7 @@ public class CharacterData
         get => baseDMG;
         set => baseDMG = value;
     }
-    
+
     /**
      * <summary>
      *  Public get/set for Position
@@ -258,8 +258,8 @@ public class LevelData
      * </summary>
      */
     [SerializeField] private PlayerPhaseStatus playerPhaseStatus;
-    
-    
+
+
     /**
      * <summary>
      * Public Getter/Setter forLevelIndex
@@ -349,7 +349,7 @@ public enum SaveType
  *  João Gouveia (joao.c.gouveia10@gmail.com)
  * </author>
  */
-[CreateAssetMenu(menuName = "Scriptables/Snapshot",fileName = "New Snapshot")]
+[CreateAssetMenu(menuName = "Scriptables/Snapshot", fileName = "New Snapshot")]
 public class Snapshot : ScriptableObject
 {
     /**
@@ -358,82 +358,82 @@ public class Snapshot : ScriptableObject
      * </summary>
      */
     [SerializeField] private String saveName;
-    
+
     /**
      * <summary>
      *  Field containing the save type
      * </summary>
      */
     [SerializeField] private SaveType saveType;
-    
+
     /**
      * <summary>
      *  List of all player characterData saved in the snapshot / savestate
      * </summary>
      */
     [SerializeField] private List<CharacterData> playerObjects;
-    
+
     /**
      * <summary>
      *  List of all AI characterData saved in the snapshot / savestate
      * </summary>
      */
     [SerializeField] private List<CharacterData> aiObjects;
-    
+
     /**
      * <summary>
      *  Field containing the level data 
      * </summary>
      */
     [SerializeField] private LevelData levelData;
-    
+
     /**
      * <summary>
      *  Field containing the playtime of the save
      * </summary>
      */
     [SerializeField] private float playTime;
-    
+
     /**
      * <summary>
      *  Field containing the last time the save was played
      * </summary>
      */
     [SerializeField] private float lastPlayed;
-    
+
     /**
      * <summary>
      *  Field containing the last time the save was saved
      * </summary>
      */
     [SerializeField] private float lasSaved;
-    
+
     /**
      * Event for updating HpBars of the ui,to be called during post Load
      */
     [SerializeField] private GameEvent updateHpBarsEvent;
-    
+
     /**
      * <summary>
      *  prefab for the player characters
      * </summary>
      */
     [SerializeField] private GameObject playerPrefab;
-    
+
     /**
      * <summary>
      *  prefab for the AI characters
      * </summary>
      */
     [SerializeField] private GameObject aiPrefab;
-    
+
     /**
      * <summary>
      *  First Step of loading the save, is to load into the scene the player is at
      * </summary>
      */
     public void LoadSave()
-    { 
+    {
         SceneManager.LoadScene(levelData.LevelIndex);
     }
 
@@ -450,7 +450,7 @@ public class Snapshot : ScriptableObject
             // Instantiates a player GameObject,either using all data from the save
             // or if the character position if Vector3.Zero, it calls SpawnNewEntity
             // which will return the created GameObject on the spawn points
-            GameObject target = (playerCharacterData.Position == Vector3.zero) ? SpawnNewEntity(playerCharacterData,false) : Instantiate(playerCharacterData.ModelReference, playerCharacterData.Position, playerCharacterData.Rotation, GameObject.Find("Player Characters").transform);
+            GameObject target = (playerCharacterData.Position == Vector3.zero) ? SpawnNewEntity(playerCharacterData, false) : Instantiate(playerCharacterData.ModelReference, playerCharacterData.Position, playerCharacterData.Rotation, GameObject.Find("Player Characters").transform);
             //After GameObject Creation we obtain the component PlayerController
             PlayerController targetController = target.GetComponent<PlayerController>();
             // We set all data for the PlayerController
@@ -459,16 +459,16 @@ public class Snapshot : ScriptableObject
             targetController.SetHealth(playerCharacterData.Health);
             targetController.SetBaseDMG(playerCharacterData.BaseDamage);
         }
-        
+
         //Go through each player character Data for spawning
         foreach (CharacterData aiCharacterData in aiObjects)
         {
             // Instantiates a AI GameObject,either using all data from the save
             // or if the character position if Vector3.Zero, it calls SpawnNewEntity
             // which will return the created GameObject on the spawn points
-            GameObject target = (aiCharacterData.Position == Vector3.zero) ? SpawnNewEntity(aiCharacterData,true) : Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("Player Characters").transform);
+            GameObject target = (aiCharacterData.Position == Vector3.zero) ? SpawnNewEntity(aiCharacterData, true) : Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("Player Characters").transform);
             //After GameObject Creation we obtain the component AIController
-            AIController targetController = target.GetComponent<AIController>();
+            AIControllable targetController = target.GetComponent<AIControllable>();
             // We set all data for the AIController
             targetController.SetMoved(aiCharacterData.HasMoved);
             targetController.SetAttacked(aiCharacterData.HasAttacked);
@@ -478,23 +478,23 @@ public class Snapshot : ScriptableObject
         // After all objects are spawned, we update global trackers such as the turn tracker
         // the status for the PlayerInputSystem
         GameObject.Find("TurnTracker").GetComponent<TurnCounter>()?.SetTurn(levelData.TurnCount);
-        GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState,levelData.PlayerPhaseStatus);
+        GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>().SetTurnStatus(levelData.TurnState, levelData.PlayerPhaseStatus);
         //Trigger the reveal animation since we are done loading
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Reveal");
         //Raise the UpdateHpBars Event for the UI to update the hp bars
         updateHpBarsEvent?.Raise();
         //TODO: Move all AI and Player objects to the correct parents
     }
-    
+
     /**
      * <summary>
      * Method responsible for spawning an entity on an available Spawn point
      * </summary>
      */
-    private GameObject SpawnNewEntity(CharacterData data,bool isAI)
+    private GameObject SpawnNewEntity(CharacterData data, bool isAI)
     {
         // Get the spawn points tagged with SpawnPointAI if isAI is true, or SpawnPointPlayer if isAI is false
-        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag(isAI?"SpawnPointAI":"SpawnPointPlayer"))
+        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag(isAI ? "SpawnPointAI" : "SpawnPointPlayer"))
         {
             //Finds the first spawnPoint With no children to spawn under
             if (spawnPoint.transform.childCount == 0)
@@ -526,20 +526,20 @@ public class Snapshot : ScriptableObject
             //Obtaining the PlayerController
             PlayerController playerController = playerObject.GetComponent<PlayerController>();
             //Creating a new CharacterData for the character
-            CharacterData playerObjectData = new CharacterData(playerPrefab,playerObject.transform.position,
-             playerObject.transform.rotation,playerController.GetHealth(),playerController.HasAttacked(),
-             playerController.HasMoved(),playerController.GetBaseDamage());
+            CharacterData playerObjectData = new CharacterData(playerPrefab, playerObject.transform.position,
+             playerObject.transform.rotation, playerController.GetHealth(), playerController.HasAttacked(),
+             playerController.HasMoved(), playerController.GetBaseDamage());
             //Add the new character data to the playerObjects list
             playerObjects.Add(playerObjectData);
         }
-        
+
         //clears the current state of the aiObjects list
         aiObjects.Clear();
         //Loops trough each AI GameObjects found
         foreach (GameObject aiObject in aiGameObjects)
         {
             //Obtaining the AIControllable
-            AIController aiController = aiObject.GetComponent<AIController>();
+            AIControllable aiController = aiObject.GetComponent<AIControllable>();
             //Creating a new CharacterData for the character
             CharacterData aiObjectData = new CharacterData(playerPrefab, aiController.transform.position,
                 aiController.transform.rotation, aiController.GetHealth(), aiController.HasAttacked(),
@@ -547,7 +547,7 @@ public class Snapshot : ScriptableObject
             //Add the new character data to the aiObjects list
             aiObjects.Add(aiObjectData);
         }
-        
+
         //Saving the current Level data
         TurnCounter turnCounter = GameObject.Find("TurnTracker").GetComponent<TurnCounter>();
         PlayerInputSystem playerInputSystem = GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>();
@@ -569,7 +569,7 @@ public class Snapshot : ScriptableObject
         levelData.PlayerPhaseStatus = PlayerPhaseStatus.Movement;
         ResetEntities();
     }
- 
+
     /**
      * <summary>
      * Method responsible for resetting the character data either for new save or moving to a new level
@@ -577,22 +577,22 @@ public class Snapshot : ScriptableObject
      */
     public void ResetEntities()
     {
-      foreach (CharacterData characterData in playerObjects)
-      {
-       characterData.HasAttacked = false;
-       characterData.HasMoved = false;
-       characterData.Health = 10;
-       characterData.Position = Vector3.zero;
-       characterData.Rotation = Quaternion.identity;
-      }
-         
-      foreach (CharacterData aiCharacterData in aiObjects)
-      {
-       aiCharacterData.HasAttacked = false;
-       aiCharacterData.HasMoved = false;
-       aiCharacterData.Health = 10;
-       aiCharacterData.Position = Vector3.zero;
-       aiCharacterData.Rotation = Quaternion.identity;
-      }
+        foreach (CharacterData characterData in playerObjects)
+        {
+            characterData.HasAttacked = false;
+            characterData.HasMoved = false;
+            characterData.Health = 10;
+            characterData.Position = Vector3.zero;
+            characterData.Rotation = Quaternion.identity;
+        }
+
+        foreach (CharacterData aiCharacterData in aiObjects)
+        {
+            aiCharacterData.HasAttacked = false;
+            aiCharacterData.HasMoved = false;
+            aiCharacterData.Health = 10;
+            aiCharacterData.Position = Vector3.zero;
+            aiCharacterData.Rotation = Quaternion.identity;
+        }
     }
 }
