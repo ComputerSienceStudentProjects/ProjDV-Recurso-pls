@@ -142,4 +142,9 @@ public class SaveManager : MonoBehaviour
         saveSlot = (SaveSlot)slot;
         Debug.Log("Save slot set to: " + saveSlot);
     }
+
+    public void ResetEntities()
+    {
+        saveSlots[(int)saveSlot].ResetEntities();
+    }
 }

@@ -44,6 +44,7 @@ public class Portal : MonoBehaviour
     private void loadNextLevel()
     {
         DontDestroyOnLoad(gameObject);
+        GameObject.Find("SaveManager").GetComponent<SaveManager>().ResetEntities();
         SceneManager.LoadScene(target.name);
     }
 }
