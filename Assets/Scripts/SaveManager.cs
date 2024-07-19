@@ -98,22 +98,6 @@ public class SaveManager : MonoBehaviour
     {
         Save();
     }
-    
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 10, 200, 50), "Load Snapshot"))
-        {
-            Load();
-        }
-        if (GUI.Button(new Rect(10, 60, 200, 50), "save Snapshot"))
-        {
-            Save();
-        }
-        if (GUI.Button(new Rect(10, 110, 200, 50), "reset Snapshot"))
-        {
-            StartNewGame();
-        }
-    }
         
     /**
      * <summary>

@@ -1,47 +1,78 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MainMenuScript : MonoBehaviour
 {
     [Header("SaveManager")] 
     [SerializeField] private SaveManager saveManager;
+
+    [SerializeField] private UIDocument _uiDocument;
+    private VisualElement rootVE;
     
     
-    public void NewGame()
+    private void Start()
+    {
+        rootVE = _uiDocument.rootVisualElement;
+        rootVE.Q<Button>("NewGameBtn").clicked += NewGame;
+        rootVE.Q<Button>("QuitGameBtn").clicked += ExitGame;
+        rootVE.Q<Button>("LoadGameBtn").clicked += LoadGame;
+        rootVE.Q<Button>("backButton").clicked += Back;
+        rootVE.Q<Button>("LoadSave1").clicked += LoadSave1;
+        rootVE.Q<Button>("LoadSave2").clicked += LoadSave2;
+        rootVE.Q<Button>("LoadSave3").clicked += LoadSave3;
+    }
+
+    private void LoadGame()
+    {
+        rootVE.Q<VisualElement>("LoadingSaves").visible = true;
+        rootVE.Q<VisualElement>("NewGame").visible = false;
+        rootVE.Q<VisualElement>("QuitGame").visible = false;
+        rootVE.Q<Button>("NewGameBtn").visible = false;
+        rootVE.Q<Button>("QuitGameBtn").visible = false;
+    }
+
+    private void Back()
+    {
+        rootVE.Q<VisualElement>("LoadingSaves").visible = false;
+        rootVE.Q<VisualElement>("NewGame").visible = true;
+        rootVE.Q<VisualElement>("QuitGame").visible = true;
+        rootVE.Q<Button>("NewGameBtn").visible = true;
+        rootVE.Q<Button>("QuitGameBtn").visible = true;
+    }
+    
+    private void NewGame()
     {
         saveManager.StartNewGame();
     }
 
-    public void LoadSave1()
+    private void ExitGame()
+    {
+        Application.Quit(0);
+        #if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+        #endif
+    }
+
+    private void LoadSave1()
     {
         saveManager.SetSlot(1);
         saveManager.Load();
     }
     
-    public void LoadSave2()
+    private void LoadSave2()
     {
         saveManager.SetSlot(2);
         saveManager.Load();
     }
     
-    public void LoadSave3()
+    private void LoadSave3()
     {
         saveManager.SetSlot(3);
         saveManager.Load();
     }
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(300, 10, 250, 50), "Start a new Game"))
-        {
-            NewGame();
-        }
-        
-        if (GUI.Button(new Rect(300, 60, 250, 50), "Load Save 1"))
-        {
-            LoadSave1();
-        }
-    }
 }
