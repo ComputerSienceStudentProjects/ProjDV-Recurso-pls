@@ -17,8 +17,8 @@ TagManager:
   - Water
   - UI
   - Ignore NavMesh
-  - 
-  - 
+  - Include NavMesh
+  - Buildings
   - 
   - 
   - 
