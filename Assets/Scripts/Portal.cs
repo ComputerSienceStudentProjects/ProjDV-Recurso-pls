@@ -36,9 +36,12 @@ public class Portal : MonoBehaviour
 
     void UpdateSave(Scene arg0, LoadSceneMode arg1)
     {
-        GameObject.Find("SaveManager").GetComponent<SaveManager>().SaveRequest();
-        if (this == null) return;
-        Destroy(gameObject);
+        if (arg0.buildIndex is > 0 and < 3)
+        {
+            GameObject.Find("SaveManager").GetComponent<SaveManager>().SaveRequest();
+            if (this == null) return;
+            Destroy(gameObject);
+        }
     }
     
     private void loadNextLevel()

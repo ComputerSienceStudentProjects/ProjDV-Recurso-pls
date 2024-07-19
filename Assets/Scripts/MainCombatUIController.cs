@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -24,6 +25,9 @@ public class MainCombatUIController : MonoBehaviour
         rootVE.Q<Button>("NextPhaseButton").clicked += NextPhaseAction;
         rootVE.Q<Button>("NextTurnButton").clicked += NextTurnAction;
         rootVE.Q<Button>("ConfirmAttackButton").clicked += ConfirmAttack;
+        rootVE.Q<Button>("ResumeBtn").clicked += TogglePauseMenu;
+        rootVE.Q<Button>("SaveBtn").clicked += SaveProgress;
+        rootVE.Q<Button>("MenuBtn").clicked += Menu;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += FindReferences;
     }
@@ -32,9 +36,43 @@ public class MainCombatUIController : MonoBehaviour
     {
         Debug.Log("Finding references");
         _uiDocument = GetComponent<UIDocument>();
-        rootVE = _uiDocument.rootVisualElement;
-        turnCounter = GameObject.Find("TurnTracker").GetComponent<TurnCounter>();
-        inputSystem = GameObject.Find("PlayerInputSystem").GetComponent<PlayerInputSystem>();
+        rootVE = _uiDocument?.rootVisualElement;
+        turnCounter = GameObject.Find("TurnTracker")?.GetComponent<TurnCounter>();
+        inputSystem = GameObject.Find("PlayerInputSystem")?.GetComponent<PlayerInputSystem>();
+    }
+
+    private void SaveProgress()
+    {
+        FindObjectOfType<SaveManager>().SaveRequest();
+    }
+    
+    private void Menu()
+    { 
+        TogglePauseMenu(); 
+        Destroy(GameObject.Find("SaveManager"));
+        GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Unreveal");
+        Invoke(nameof(LoadMenu),1f);
+    }
+
+    private void LoadMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Toggling PauseHUD");
+            TogglePauseMenu();
+        }
+    }
+
+    private void TogglePauseMenu()
+    {
+        Debug.Log("Is Visible? " + rootVE.Q<VisualElement>("PauseHUD").visible);
+        rootVE.Q<VisualElement>("PauseHUD").visible = !rootVE.Q<VisualElement>("PauseHUD").visible;
+        Time.timeScale = (Time.timeScale == 0.0f)? 1.0f : 0f;
     }
 
     public void HandleShowAttack()
@@ -74,7 +112,7 @@ public class MainCombatUIController : MonoBehaviour
 
     public void UpdateTurnCounter()
     {
-        if (rootVE == null) 
+        if (rootVE == null || turnCounter == null || inputSystem == null) 
             FindReferences(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         rootVE.Q<Label>("TurnCounter").text = "TURN " + turnCounter.GetTurnCount();
     }
@@ -99,7 +137,7 @@ public class MainCombatUIController : MonoBehaviour
             VisualElement characterVE = partyRoot.Q<VisualElement>("Character" + playerIndex + "VE");
             PlayerController playerController = playerObject.GetComponent<PlayerController>();
             float sizeMultiplier = playerController.GetHealthPercentage();
-            //characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
+            characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
             playerIndex++;
         }
     }

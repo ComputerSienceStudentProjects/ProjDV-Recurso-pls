@@ -86,7 +86,9 @@ public class SaveManager : MonoBehaviour
      */
     private void AfterSceneLoading(Scene arg0, LoadSceneMode arg1)
     {
-        saveSlots[(int)saveSlot].PostLoad();
+        if (arg0.buildIndex is > 0 and < 3){
+            saveSlots[(int)saveSlot].PostLoad();
+        }
     }
     
     /**

@@ -49,12 +49,18 @@ public class MainMenuScript : MonoBehaviour
         saveManager.StartNewGame();
     }
 
-    private void ExitGame()
+    private void DoExit()
     {
         Application.Quit(0);
         #if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
+                EditorApplication.isPlaying = false;
         #endif
+    }
+    
+    private void ExitGame()
+    {
+        GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Unreveal");
+        Invoke(nameof(DoExit),1f);
     }
 
     private void LoadSave1()
