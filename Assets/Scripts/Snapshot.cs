@@ -466,7 +466,7 @@ public class Snapshot : ScriptableObject
             // Instantiates a AI GameObject,either using all data from the save
             // or if the character position if Vector3.Zero, it calls SpawnNewEntity
             // which will return the created GameObject on the spawn points
-            GameObject target = (aiCharacterData.Position == Vector3.zero) ? SpawnNewEntity(aiCharacterData, true) : Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("Player Characters").transform);
+            GameObject target = (aiCharacterData.Position == Vector3.zero) ? SpawnNewEntity(aiCharacterData, true) : Instantiate(aiCharacterData.ModelReference, aiCharacterData.Position, aiCharacterData.Rotation, GameObject.Find("AICharacters").transform);
             //After GameObject Creation we obtain the component AIController
             AIControllable targetController = target.GetComponent<AIControllable>();
             // We set all data for the AIController
@@ -500,6 +500,14 @@ public class Snapshot : ScriptableObject
             if (spawnPoint.transform.childCount == 0)
             {
                 //returns the spawned GameObject with the character Data
+                if (isAI)
+                {
+                    GameObject ai = Instantiate(data.ModelReference, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);
+                    AIControllable aIControllable = ai.GetComponent<AIControllable>();
+                    aIControllable.ResetHealth();
+                    data.Health = aIControllable.GetHealth();
+                    return ai;
+                }
                 return Instantiate(data.ModelReference, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);
             }
         }
@@ -541,7 +549,7 @@ public class Snapshot : ScriptableObject
             //Obtaining the AIControllable
             AIControllable aiController = aiObject.GetComponent<AIControllable>();
             //Creating a new CharacterData for the character
-            CharacterData aiObjectData = new CharacterData(playerPrefab, aiController.transform.position,
+            CharacterData aiObjectData = new CharacterData(aiPrefab, aiController.transform.position,
                 aiController.transform.rotation, aiController.GetHealth(), aiController.HasAttacked(),
                 aiController.HasMoved(), aiController.getBaseDMG());
             //Add the new character data to the aiObjects list
