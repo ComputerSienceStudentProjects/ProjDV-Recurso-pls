@@ -1,6 +1,7 @@
-using UnityEditor;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 /**
  * <summary>
@@ -13,9 +14,21 @@ using UnityEngine.SceneManagement;
  *  João Gouveia (joao.c.gouveia10@gmail.com)
  * </author>
  */
+
+[Serializable]
+public class SceneReference
+{
+    [SerializeField] private Object sceneAsset;
+    [SerializeField] private string sceneName = "";
+
+    public string SceneName => sceneName;
+
+    public static implicit operator string(SceneReference sceneReference) => sceneReference.SceneName;
+}
+
 public class Portal : MonoBehaviour
 {
-    [SerializeField] private SceneAsset target;
+    [SerializeField] private SceneReference targetScene;
     [SerializeField] private Animator _animator;
 
     private void Start()
@@ -48,6 +61,6 @@ public class Portal : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         GameObject.Find("SaveManager").GetComponent<SaveManager>().ResetEntities();
-        SceneManager.LoadScene(target.name);
+        SceneManager.LoadScene(targetScene.SceneName);
     }
 }

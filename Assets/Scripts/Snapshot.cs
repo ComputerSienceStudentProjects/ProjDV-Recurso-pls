@@ -483,7 +483,18 @@ public class Snapshot : ScriptableObject
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Reveal");
         //Raise the UpdateHpBars Event for the UI to update the hp bars
         updateHpBarsEvent?.Raise();
-        //TODO: Move all AI and Player objects to the correct parents
+
+        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag("AISpawnPoints"))
+        {
+          if (spawnPoint.transform.childCount == 0) continue;
+          spawnPoint.transform.GetChild(0).transform.parent = GameObject.Find("AICharacters").transform;
+        }
+        
+        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag("PlayerSpawnPoints"))
+        {
+         if (spawnPoint.transform.childCount == 0) continue;
+         spawnPoint.transform.GetChild(0).transform.parent = GameObject.Find("Player Characters").transform;
+        }
     }
 
     /**
@@ -494,7 +505,7 @@ public class Snapshot : ScriptableObject
     private GameObject SpawnNewEntity(CharacterData data, bool isAI)
     {
         // Get the spawn points tagged with SpawnPointAI if isAI is true, or SpawnPointPlayer if isAI is false
-        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag(isAI ? "SpawnPointAI" : "SpawnPointPlayer"))
+        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag(isAI ? "AISpawnPoints" : "PlayerSpawnPoints"))
         {
             //Finds the first spawnPoint With no children to spawn under
             if (spawnPoint.transform.childCount == 0)

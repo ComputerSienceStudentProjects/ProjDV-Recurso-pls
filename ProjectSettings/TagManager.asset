@@ -7,8 +7,8 @@ TagManager:
   - SaveManager
   - AI
   - UIManager
-  - SpawnPointPlayer
-  - SpawnPointAI
+  - AISpawnPoints
+  - PlayerSpawnPoints
   layers:
   - Default
   - TransparentFX

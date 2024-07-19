@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(Snapshot))]
-public class SnapshotEditor : Editor
+public class SnapshotEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {

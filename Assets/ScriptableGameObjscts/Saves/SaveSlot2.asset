@@ -16,16 +16,30 @@ MonoBehaviour:
   saveType: 0
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -3.4754071, y: 1.4379184, z: -2.922842}
-    rotation: {x: -0, y: 0.9999016, z: -0, w: 0.014029476}
-    health: 1
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
     baseDMG: 20
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -6.8843966, y: 1.4379184, z: -3.9784164}
-    rotation: {x: -0, y: -0.6768302, z: -0, w: 0.73613924}
-    health: 7
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
+    baseDMG: 20
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
+    baseDMG: 20
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
     baseDMG: 20
     hasAttacked: 0
     hasMoved: 0
@@ -38,6 +52,6 @@ MonoBehaviour:
   playTime: 0
   lastPlayed: 0
   lasSaved: 0
-  updateHpBarsEvent: {fileID: 0}
+  updateHpBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
   playerPrefab: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-  aiPrefab: {fileID: 0}
+  aiPrefab: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
