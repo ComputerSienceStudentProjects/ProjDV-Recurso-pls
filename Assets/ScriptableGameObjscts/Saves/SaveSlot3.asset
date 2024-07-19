@@ -45,10 +45,10 @@ MonoBehaviour:
     hasMoved: 0
   aiObjects:
   - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
+    position: {x: 12.38, y: 1.5700002, z: -6.0600004}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
     health: 10
-    baseDMG: 10
+    baseDMG: 0
     hasAttacked: 0
     hasMoved: 0
   levelData:

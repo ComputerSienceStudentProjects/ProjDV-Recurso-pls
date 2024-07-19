@@ -940,7 +940,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EndAITurn: {fileID: 11400000, guid: 19891c53de4f24f47a012dac776b3527, type: 2}
-  PlayerTurnStart: {fileID: 0}
 --- !u!114 &693143248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,13 +956,13 @@ MonoBehaviour:
   Response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: fe54ba6c3598f3548989a839560c7a55, type: 3}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 693143247}
+        m_TargetAssemblyTypeName: AIController, Assembly-CSharp
+        m_MethodName: OnAITurnStart
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
