@@ -16,8 +16,8 @@ TagManager:
   - AI
   - Water
   - UI
-  - 
-  - 
+  - Include On Navmesh
+  - Ignore From Navmesh
   - Player
   - 
   - 
