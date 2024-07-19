@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 public class PlayerInputSystem : MonoBehaviour
 {
     private PlayerController _playerController;
-    private AIController _aiController;
+    private AIControllable _aiControllable;
     [SerializeField] private bool bMovementPhase = true;
     [SerializeField] private bool bAttackPhase;
     private Camera _mainCamera;
@@ -24,17 +24,18 @@ public class PlayerInputSystem : MonoBehaviour
         if (bMovementPhase) HandleMovementPhaseInput();
         if (bAttackPhase) HandleAttackPhaseInput();
     }
-    
+
     private void HandleAttackPhaseInput()
     {
         if (!Input.GetMouseButtonDown(0)) return;
         Vector3 mouseScreenPosition = Input.mousePosition;
         if (!Physics.Raycast(_mainCamera.ScreenPointToRay(mouseScreenPosition), out var hit)) return;
-        AIController aiTarget = hit.collider.GetComponent<AIController>();
+        AIControllable aiTarget = hit.collider.GetComponent<AIControllable>();
+        Debug.Log(hit.collider.gameObject);
         if (aiTarget != null)
         {
-            if (_playerController == null)return;
-            _aiController = hit.collider.GetComponent<AIController>();
+            if (_playerController == null) return;
+            _aiControllable = hit.collider.GetComponent<AIControllable>();
             showAttacksEvent.Raise();
             return;
         }
@@ -51,7 +52,7 @@ public class PlayerInputSystem : MonoBehaviour
         bMovementPhase = true;
         bAttackPhase = false;
     }
-    
+
     private void HandleMovementPhaseInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -75,12 +76,12 @@ public class PlayerInputSystem : MonoBehaviour
 
     private void HandlePlayerSelect(PlayerController playerController)
     {
-        
+
         if (_playerController == playerController)
         {
             playerController.OnDeselected();
             _playerController = null;
-            _aiController = null;
+            _aiControllable = null;
             cameraController.UnlockOnGameObject();
             return;
         }
@@ -94,43 +95,43 @@ public class PlayerInputSystem : MonoBehaviour
 
     public float GetOdds()
     {
-        if (_playerController == null || _aiController == null) return 0;
+        if (_playerController == null || _aiControllable == null) return 0;
         return CalculateAttackOdds();
     }
-    
+
     public void ConfirmAttack()
     {
         ConfirmAttack(CalculateAttackOdds());
     }
-    
+
     private void ConfirmAttack(float attackOdds)
     {
         float randomValue = Random.value;
         if (attackOdds > randomValue)
         {
-            _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController,true);
+            _playerController.PlayAttackAnim(_aiControllable.GetPosition(), _aiControllable, true);
             _playerController.OnDeselected();
             _playerController = null;
-            _aiController = null;
+            _aiControllable = null;
         }
         else
         {
-            _playerController.PlayAttackAnim(_aiController.GetPosition(),_aiController,false);
+            _playerController.PlayAttackAnim(_aiControllable.GetPosition(), _aiControllable, false);
             _playerController.OnDeselected();
             _playerController = null;
-            _aiController = null;
+            _aiControllable = null;
         }
     }
-    
+
     private float CalculateAttackOdds()
     {
         float initialOdds = 0;
         float minDistance = float.MaxValue;
-        Vector3 aiPos = _aiController.GetPosition();
+        Vector3 aiPos = _aiControllable.GetPosition();
 
         if (Physics.Linecast(_playerController.GetCastPoint(), aiPos, out var hitInfo))
         {
-            if (hitInfo.collider.GetComponent<AIController>() == _aiController)
+            if (hitInfo.collider.GetComponent<AIControllable>() == _aiControllable)
             {
                 initialOdds = 1f;
                 minDistance = hitInfo.distance;
@@ -162,7 +163,7 @@ public class PlayerInputSystem : MonoBehaviour
             case TurnState.Player:
                 GameObject.Find("UI").GetComponent<MainCombatUIController>()
                     .setPlayerOnPhase(levelDataPlayerPhaseStatus);
-                switch(levelDataPlayerPhaseStatus)
+                switch (levelDataPlayerPhaseStatus)
                 {
                     case PlayerPhaseStatus.Attack:
                         bMovementPhase = false;
@@ -185,7 +186,7 @@ public class PlayerInputSystem : MonoBehaviour
             bAttackPhase = true;
             bMovementPhase = false;
             _playerController = null;
-            _aiController = null;
+            _aiControllable = null;
         }
         else
         {
@@ -199,7 +200,7 @@ public class PlayerInputSystem : MonoBehaviour
         bAttackPhase = false;
         _playerController?.OnDeselected();
         _playerController = null;
-        _aiController = null;
+        _aiControllable = null;
         aiStartTurnEvent.Raise();
         foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
         {
@@ -224,7 +225,7 @@ public class PlayerInputSystem : MonoBehaviour
     public int GetDamage()
     {
         if (_playerController == null) return -1;
-        if (_aiController == null) return -1;
+        if (_aiControllable == null) return -1;
 
         return _playerController.GetBaseDamage();
     }

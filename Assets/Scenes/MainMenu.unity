@@ -627,7 +627,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 00383fe16579f864faa880271766e469, type: 2}
   - {fileID: 11400000, guid: f7de81c9d8cdf584a85c081f954b8335, type: 2}
   - {fileID: 11400000, guid: 5b3291198de630544a3879a41a702947, type: 2}
-  saveSlot: 1
+  saveSlot: 3
 --- !u!4 &1772917200
 Transform:
   m_ObjectHideFlags: 0
