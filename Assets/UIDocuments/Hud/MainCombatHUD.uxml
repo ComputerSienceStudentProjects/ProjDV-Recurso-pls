@@ -10,7 +10,7 @@
     <ui:Instance template="CombatActions" name="CombatActions" style="position: absolute; right: 0; bottom: 0; width: 232px; height: 130px;" />
     <ui:Instance template="CombatPartyHUD" name="CombatPartyHUD" style="position: absolute; left: 0; bottom: 0; width: 380px; height: 130px;" />
     <ui:Instance template="AttackUI" name="AttackUI" style="position: absolute; right: 0; bottom: 473px; width: 134px; height: 98px; display: flex; visibility: hidden;" />
-    <ui:VisualElement name="PauseHUD" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(30, 29, 44, 0.69); -unity-background-image-tint-color: rgb(255, 255, 255); display: flex; visibility: hidden;">
+    <ui:VisualElement name="PauseHUD" style="flex-grow: 1; width: 100%; height: 100%; background-color: rgba(30, 29, 44, 0.69); -unity-background-image-tint-color: rgb(255, 255, 255); display: flex; visibility: hidden; position: absolute;">
         <ui:Instance template="InGameMenu" name="InGameMenu" style="width: 355px; height: 450px; position: absolute; top: 248px; left: 805px; overflow: hidden;" />
     </ui:VisualElement>
 </ui:UXML>
