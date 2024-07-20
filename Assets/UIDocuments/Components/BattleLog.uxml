@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="LogTitle" src="project://database/Assets/UIDocuments/Components/LogTitle.uxml?fileID=9197481963319205126&amp;guid=3521883dadf80eb49a577160e175a2c9&amp;type=3#LogTitle" />
+    <ui:VisualElement style="flex-grow: 1; align-self: auto;">
+        <ui:Instance template="LogTitle" name="LogTitle" />
+    </ui:VisualElement>
+</ui:UXML>

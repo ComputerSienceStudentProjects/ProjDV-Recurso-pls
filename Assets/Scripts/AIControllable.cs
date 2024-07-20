@@ -20,6 +20,9 @@ public class AIControllable : MonoBehaviour
     private NavMeshAgent _agent;
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
+    [SerializeField] GameEvent AddToLog;
+
+    private string logText;
 
     void Start()
     {
@@ -188,6 +191,8 @@ public class AIControllable : MonoBehaviour
         }
         else
         { await Flee(); Heal(); }
+        AddToLog.SetArgument("text", typeof(string), logText);
+        AddToLog.Raise();
         await FinishTurn();
     }
 
@@ -213,6 +218,7 @@ public class AIControllable : MonoBehaviour
             await RotateTowards(direction);
             _animator.SetTrigger("attack");
             isHealingOrAttacking = true;
+
         }
     }
 
@@ -272,11 +278,13 @@ public class AIControllable : MonoBehaviour
             currentTarget.GetComponent<PlayerController>().TakeDamage(getBaseDMG());
             Debug.Log("Did hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
+            logText = gameObject.name + " has attacked " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + hitChance + "% chance of hitting.";
         }
         else
         {
             Debug.Log("Did not hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
+            logText = gameObject.name + " has failed to attack " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + hitChance + "% chance of hitting.";
         }
         isHealingOrAttacking = false;
     }
@@ -285,6 +293,7 @@ public class AIControllable : MonoBehaviour
     {
         _animator.SetTrigger("heal");
         isHealingOrAttacking = true;
+        logText = gameObject.name + " has fled and healed for (" + healPower + " HP).";
     }
 
     public void DoHeal()

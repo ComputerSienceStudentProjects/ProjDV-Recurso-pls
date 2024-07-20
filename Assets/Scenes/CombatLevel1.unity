@@ -3940,7 +3940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe54ba6c3598f3548989a839560c7a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialHealth: 0
+  EndAITurn: {fileID: 0}
 --- !u!1 &173422894 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
@@ -21229,6 +21229,8 @@ GameObject:
   - component: {fileID: 952086930}
   - component: {fileID: 952086929}
   - component: {fileID: 952086928}
+  - component: {fileID: 952086935}
+  - component: {fileID: 952086936}
   m_Layer: 5
   m_Name: UI
   m_TagString: UIManager
@@ -21393,6 +21395,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &952086935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952086927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9912368a1c0e4b14e938f74e1ab855a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UiComponent: {fileID: 9197481963319205126, guid: e4981c29b1216c64d9737f8cbc9d5b00, type: 3}
+--- !u!114 &952086936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952086927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d20d4e010f5954a93b8c509f2e87bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 353391d6b639d26449537a8d3b2f57d6, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 952086935}
+        m_TargetAssemblyTypeName: BattleLogController, Assembly-CSharp
+        m_MethodName: AddToLog
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &953683502
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31688,7 +31731,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80640f9d380d4648a969d1142d84ea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  targetScene:
+    sceneAsset: {fileID: 0}
+    sceneName: 
   _animator: {fileID: 0}
 --- !u!65 &1300349805
 BoxCollider:

@@ -230,6 +230,7 @@ MonoBehaviour:
   health: 0
   attackRange: 1.5
   movementRange: 15
+  AddToLog: {fileID: 11400000, guid: 353391d6b639d26449537a8d3b2f57d6, type: 2}
   healPower: 5
 --- !u!65 &877264713375638199
 BoxCollider:
