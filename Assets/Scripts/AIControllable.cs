@@ -10,6 +10,7 @@ public class AIControllable : MonoBehaviour
     [SerializeField] private int initialHealth;
     [SerializeField] private int baseDMG;
     [SerializeField] private float health;
+    [SerializeField] FloatingHealth floatingHealthBar;
     private bool _hasMovedAlready = false;
     private bool _hasAttackedAlready = false;
     private float leastDistance = 100f;
@@ -20,7 +21,7 @@ public class AIControllable : MonoBehaviour
     private NavMeshAgent _agent;
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
-    
+
     [SerializeField] GameEvent AddToLog;
 
     private string logText;
@@ -39,6 +40,7 @@ public class AIControllable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        floatingHealthBar.UpdateHealthBar(health, initialHealth);
         health -= damage;
         _animator.SetTrigger("take_damage");
         if (health <= 0)
@@ -106,11 +108,11 @@ public class AIControllable : MonoBehaviour
 
         if (closestIndex == -1)
         {
-            Debug.Log(string.Format("Ai {0} did not find a close enemy",gameObject.name));
+            Debug.Log(string.Format("Ai {0} did not find a close enemy", gameObject.name));
         }
-        
-        Debug.Log(string.Format("Ai {0} chose closest target as {1} with instanceID {2}",gameObject.name,playerParty[closestIndex].name,playerParty[closestIndex].GetInstanceID()));
-        
+
+        Debug.Log(string.Format("Ai {0} chose closest target as {1} with instanceID {2}", gameObject.name, playerParty[closestIndex].name, playerParty[closestIndex].GetInstanceID()));
+
         return closestIndex;
     }
 
@@ -119,8 +121,8 @@ public class AIControllable : MonoBehaviour
         //Check distance to target
         //If in attack distance rotate, calculate odds and play animation of attack
         //If not in attack distance move towards player to the maximum movementRange or to the maximum attackRange
-        
-        
+
+
 
         float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
         Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
@@ -138,7 +140,7 @@ public class AIControllable : MonoBehaviour
         {
             Debug.Log("We're too far to attack but we can move towards the target and attack");
             logText =
-                string.Format("Ai {0} moved to attack {1}",gameObject.name,currentTarget.gameObject.name);
+                string.Format("Ai {0} moved to attack {1}", gameObject.name, currentTarget.gameObject.name);
             AddToLog.SetArgument("text", typeof(string), logText);
             AddToLog.Raise();
             await RotateTowards(direction);
@@ -151,7 +153,7 @@ public class AIControllable : MonoBehaviour
         {
             Debug.Log("The target is too far away so we're moving towards it, however we will not reach attacking distance");
             logText =
-                string.Format("Ai {0} moves closer to {1}",gameObject.name,currentTarget.gameObject.name);
+                string.Format("Ai {0} moves closer to {1}", gameObject.name, currentTarget.gameObject.name);
             AddToLog.SetArgument("text", typeof(string), logText);
             AddToLog.Raise();
             await RotateTowards(direction);
@@ -207,7 +209,7 @@ public class AIControllable : MonoBehaviour
             FindClosestTarget(new List<GameObject>(GameObject.FindGameObjectsWithTag("Player")));
         }
         if (currentTarget == null) return;
-        
+
         if (health >= 50)
         {
             await ThreatTarget();
@@ -215,7 +217,7 @@ public class AIControllable : MonoBehaviour
         }
         else
         {
-            await Flee(); Heal(); 
+            await Flee(); Heal();
         }
 
         await FinishTurn();
@@ -326,7 +328,7 @@ public class AIControllable : MonoBehaviour
         AddToLog.SetArgument("text", typeof(string), logText);
         AddToLog.Raise();
     }
-    
+
     public void DoHeal()
     {
         health += healPower;
