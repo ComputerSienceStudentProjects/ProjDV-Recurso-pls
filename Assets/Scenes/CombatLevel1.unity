@@ -3940,7 +3940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe54ba6c3598f3548989a839560c7a55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EndAITurn: {fileID: 0}
+  EndAITurn: {fileID: 11400000, guid: 19891c53de4f24f47a012dac776b3527, type: 2}
 --- !u!1 &173422894 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}

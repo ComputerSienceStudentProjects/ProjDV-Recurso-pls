@@ -20,6 +20,7 @@ public class AIControllable : MonoBehaviour
     private NavMeshAgent _agent;
     private Animator _animator;
     private LineRenderer _pathLineRenderer;
+    
     [SerializeField] GameEvent AddToLog;
 
     private string logText;
@@ -96,13 +97,20 @@ public class AIControllable : MonoBehaviour
 
     public int FindClosestTarget(List<GameObject> playerParty)
     {
-        int closestIndex = 0;
+        int closestIndex = -1;
         for (int i = 0; i < playerParty.Count; i++)
         {
             float distance = Vector3.Distance(gameObject.transform.position, playerParty[i].transform.position);
             if (distance < leastDistance) { leastDistance = distance; currentTarget = playerParty[i]; closestIndex = i; }
         }
 
+        if (closestIndex == -1)
+        {
+            Debug.Log(string.Format("Ai {0} did not find a close enemy",gameObject.name));
+        }
+        
+        Debug.Log(string.Format("Ai {0} chose closest target as {1} with instanceID {2}",gameObject.name,playerParty[closestIndex].name,playerParty[closestIndex].GetInstanceID()));
+        
         return closestIndex;
     }
 
@@ -111,6 +119,8 @@ public class AIControllable : MonoBehaviour
         //Check distance to target
         //If in attack distance rotate, calculate odds and play animation of attack
         //If not in attack distance move towards player to the maximum movementRange or to the maximum attackRange
+        
+        
 
         float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
         Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
@@ -127,6 +137,10 @@ public class AIControllable : MonoBehaviour
         //*i think, needs testing.
         {
             Debug.Log("We're too far to attack but we can move towards the target and attack");
+            logText =
+                string.Format("Ai {0} moved to attack {1}",gameObject.name,currentTarget.gameObject.name);
+            AddToLog.SetArgument("text", typeof(string), logText);
+            AddToLog.Raise();
             await RotateTowards(direction);
             destination = transform.position + direction * (distance - attackRange);
             NavMeshPath path = new NavMeshPath();
@@ -136,6 +150,10 @@ public class AIControllable : MonoBehaviour
         else
         {
             Debug.Log("The target is too far away so we're moving towards it, however we will not reach attacking distance");
+            logText =
+                string.Format("Ai {0} moves closer to {1}",gameObject.name,currentTarget.gameObject.name);
+            AddToLog.SetArgument("text", typeof(string), logText);
+            AddToLog.Raise();
             await RotateTowards(direction);
             destination = transform.position + direction * movementRange;
             NavMeshPath path = new NavMeshPath();
@@ -184,22 +202,29 @@ public class AIControllable : MonoBehaviour
     }
     public async Task PerformTurn()
     {
+        if (currentTarget == null)
+        {
+            FindClosestTarget(new List<GameObject>(GameObject.FindGameObjectsWithTag("Player")));
+        }
+        if (currentTarget == null) return;
+        
         if (health >= 50)
         {
             await ThreatTarget();
             await Attack();
         }
         else
-        { await Flee(); Heal(); }
-        AddToLog.SetArgument("text", typeof(string), logText);
-        AddToLog.Raise();
+        {
+            await Flee(); Heal(); 
+        }
+
         await FinishTurn();
     }
 
     private bool isHealingOrAttacking = false;
     [SerializeField] private float healPower = 5.0f;
 
-    public async Task FinishTurn()
+    private async Task FinishTurn()
     {
         while (isHealingOrAttacking)
         {
@@ -207,7 +232,7 @@ public class AIControllable : MonoBehaviour
         }
     }
 
-    public async Task Attack()
+    private async Task Attack()
     {
         //  We're in range of attack within a decent health amount so trading attacks is a decent idea, below 50hp the hit chance should be very low so it makes sense to retreat and heal up,
         //the ai will not be able to run away further then the player can move unless the player also chose to desengage the ai so the heal can be canceled though that might not be the smartest choice.
@@ -222,7 +247,7 @@ public class AIControllable : MonoBehaviour
         }
     }
 
-    public async Task Flee()
+    private async Task Flee()
     {
         //  We're low so we're gonna retreat and heal, the heal is low so if the player chases he can kill even if the ai is healing, also probably should have a cooldown
         //  Healing 15 health points every 3 turns should be fine since the player attacks for 10 damage so well still be 15 points in the red while slowing down the player
@@ -279,23 +304,29 @@ public class AIControllable : MonoBehaviour
             Debug.Log("Did hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
             logText = gameObject.name + " has attacked " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + hitChance + "% chance of hitting.";
+            AddToLog.SetArgument("text", typeof(string), logText);
+            AddToLog.Raise();
         }
         else
         {
             Debug.Log("Did not hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
             logText = gameObject.name + " has failed to attack " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + hitChance + "% chance of hitting.";
+            AddToLog.SetArgument("text", typeof(string), logText);
+            AddToLog.Raise();
         }
         isHealingOrAttacking = false;
     }
 
-    public void Heal()
+    private void Heal()
     {
         _animator.SetTrigger("heal");
         isHealingOrAttacking = true;
         logText = gameObject.name + " has fled and healed for (" + healPower + " HP).";
+        AddToLog.SetArgument("text", typeof(string), logText);
+        AddToLog.Raise();
     }
-
+    
     public void DoHeal()
     {
         health += healPower;
