@@ -32525,7 +32525,7 @@ GameObject:
   - component: {fileID: 1300349801}
   - component: {fileID: 1300349804}
   - component: {fileID: 1300349805}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32610,9 +32610,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene:
-    sceneAsset: {fileID: 0}
-    sceneName: 
-  _animator: {fileID: 0}
+    sceneAsset: {fileID: 102900000, guid: 9a430f2eb3426ce438c6deaace9bb43f, type: 3}
+    sceneName: CombatLevel2
+  _animator: {fileID: 2026340720}
 --- !u!65 &1300349805
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32628,12 +32628,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0000002, y: 6.214828, z: 6.123235e-17}
-  m_Center: {x: 0, y: -2.6074135, z: 0}
+  m_Size: {x: 0.70220697, y: 9.855827, z: 26.87216}
+  m_Center: {x: -0.00039284566, y: -0.7869139, z: 9.714777}
 --- !u!1 &1300686978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 3667b1c4d7f532647b9156782c0c80f0, type: 3}
