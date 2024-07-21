@@ -28,6 +28,14 @@ public class BattleLogController : MonoBehaviour
         _battleLog = _rootVE.Q<VisualElement>("BattleLog");
     }
 
+    /**
+         * <summary>
+         *  Adds a new line to combat log and removes oldest line if needed
+         * </summary>
+         * <param name="list">
+         *    list of arguments passed by event, contains text to add to battle log
+         * </param>
+         */
     public void AddToLog(List<Argument> list)
     {
         if (_battleLog.childCount == 5)

@@ -43,11 +43,24 @@ public class AIControllable : MonoBehaviour
         _pathLineRenderer = GetComponent<LineRenderer>();
     }
 
+    /**
+     * <summary>
+     *  Resets player health back to initial value configurable in inspector.
+     * </summary>
+     */
     public void ResetHealth()
     {
         health = initialHealth;
     }
 
+    /**
+         * <summary>
+         *  Removes damage value from character health, plays take_damage or death animation.
+         * </summary>
+         * <param name="damage">
+         *    Float value indicating damage to be subtracted from health.
+         * </param>
+         */
     public void TakeDamage(float damage)
     {
         floatingHealthBar.UpdateHealthBar(health, initialHealth);
@@ -57,6 +70,11 @@ public class AIControllable : MonoBehaviour
             _animator.SetTrigger("death");
     }
 
+    /**
+         * <summary>
+         *  Destroys gameObject, call only as Animation Event at end of Death Animation.
+         * </summary>
+         */
     public void Die()
     {
         Destroy(gameObject);
@@ -107,6 +125,15 @@ public class AIControllable : MonoBehaviour
         baseDamage = baseDMG;
     }
 
+    /**
+       * <summary>
+       *  Find the closest player character from list returns its index
+       * </summary>
+       <param name="playerParty">
+       *    List parameter that contains player character gameObjects
+       * </param>
+       */
+
     public int FindClosestTarget(List<GameObject> playerParty)
     {
         int closestIndex = -1;
@@ -125,7 +152,11 @@ public class AIControllable : MonoBehaviour
 
         return closestIndex;
     }
-
+    /**
+           * <summary>
+           *  Does threat logic of AI
+           * </summary>
+           */
     private async Task ThreatTarget()
     {
         //Check distance to target
@@ -176,6 +207,14 @@ public class AIControllable : MonoBehaviour
         await WaitUntilReachedTarget(destination, direction);
     }
 
+    /**
+           * <summary>
+           * Rotates the character towards a direction.
+           * </summary>
+           <param name="direction">
+           *    Vector3, normalized vector indicating the direction we want to rotate to.
+           * </param>
+           */
     private async Task RotateTowards(Vector3 direction)
     {
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -189,6 +228,17 @@ public class AIControllable : MonoBehaviour
         transform.rotation = lookRotation;
     }
 
+    /**
+           * <summary>
+           *  Waits until character has reached its target location
+           * </summary>
+           <param name="destination">
+           *   Vector3, vector containing the target position for the NavMeshAgent
+           * </param>
+           <param name="direction">
+           *   Vector3, vector containing the target position for the NavMeshAgent
+           * </param>
+           */
     private async Task WaitUntilReachedTarget(Vector3 destination, Vector3 direction)
     {
         _agent.destination = destination;
@@ -196,6 +246,11 @@ public class AIControllable : MonoBehaviour
             await Task.Yield();
     }
 
+    /**
+               * <summary>
+               *  Checks when the character reaches its destination
+               * </summary>
+               */
     private bool ReachedDestinationOrGaveUp()
     {
         if (!_agent.pathPending)
@@ -212,6 +267,12 @@ public class AIControllable : MonoBehaviour
         }
         return false;
     }
+    /**
+           * <summary>
+           *  Turn logic, chooses behaviour based on health
+           * </summary>
+           
+           */
     public async Task PerformTurn()
     {
         if (currentTarget == null)
@@ -236,6 +297,11 @@ public class AIControllable : MonoBehaviour
     private bool isHealingOrAttacking = false;
     [SerializeField] private float healPower = 5.0f;
 
+    /**
+               * <summary>
+               *  Waits until character has finished its animation of either healing or attacking before continuing
+               * </summary>
+               */
     private async Task FinishTurn()
     {
         while (isHealingOrAttacking)
@@ -244,6 +310,11 @@ public class AIControllable : MonoBehaviour
         }
     }
 
+    /**
+           * <summary>
+           *  Rotates towards enemy then sets animator trigger to attack, actual attack is made by attacking Attack function as an Animation Event
+           * </summary>
+           */
     private async Task Attack()
     {
         //  We're in range of attack within a decent health amount so trading attacks is a decent idea, below 50hp the hit chance should be very low so it makes sense to retreat and heal up,
@@ -259,6 +330,11 @@ public class AIControllable : MonoBehaviour
         }
     }
 
+    /**
+               * <summary>
+               *  Finds the furthest posible location from its target and moves towards it.
+               * </summary>
+               */
     private async Task Flee()
     {
         //  We're low so we're gonna retreat and heal, the heal is low so if the player chases he can kill even if the ai is healing, also probably should have a cooldown
@@ -275,6 +351,15 @@ public class AIControllable : MonoBehaviour
 
 
     }
+
+    /**
+           * <summary>
+           *  Returns a Vector containing the furthest valid point it can move to.
+           * </summary>
+           <param name="samplePoints">
+           *   int, number of points to calculate
+           * </param>
+           */
     Vector3 FindFurthestValidFleePoint(int samplePoints)
     {
         Vector3 bestFleePoint = Vector3.zero;
@@ -305,6 +390,12 @@ public class AIControllable : MonoBehaviour
         return bestFleePoint;
     }
 
+    /**
+               * <summary>
+               *  Does damage to enemy based on a hit chance calculated based on random chance with the hit chance being severely impacted by health points.
+               * </summary>
+               
+               */
     public void DoDamage()
     {
         //Hit chance will be linear with hp so 100hp means 100% hit chance, 50hp means 50% hit chance, below 50hp we heal because its less then a 50/50 chance to hit
@@ -330,6 +421,11 @@ public class AIControllable : MonoBehaviour
         isHealingOrAttacking = false;
     }
 
+    /**
+               * <summary>
+               *  Begins heal animation
+               * </summary>
+               */
     private void Heal()
     {
         _animator.SetTrigger("heal");
@@ -338,12 +434,25 @@ public class AIControllable : MonoBehaviour
         AddToLog.SetArgument("text", typeof(string), logText);
         AddToLog.Raise();
     }
-
+    /**
+               * <summary>
+               *  Finishes heal animation and clears flag.
+               * </summary>
+               */
     public void DoHeal()
     {
         health += healPower;
         isHealingOrAttacking = false;
     }
+
+    /**
+           * <summary>
+           *  Draws path that ai is taking towards destination
+           * </summary>
+           * <param name="path">
+           *   NavMeshPath, calculated path to destination.
+           * </param>
+           */
 
     private void DrawPath(NavMeshPath path)
     {

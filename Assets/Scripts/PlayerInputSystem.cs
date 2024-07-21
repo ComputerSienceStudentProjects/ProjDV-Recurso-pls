@@ -25,14 +25,14 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private GameEvent showAttacksEvent;
     [SerializeField] private GameEvent logEvent;
 
-#region private fields
+    #region private fields
     private PlayerController _playerController;
     private AIControllable _aiControllable;
     private Camera _mainCamera;
-#endregion
-    
-#region Public Methods
-    
+    #endregion
+
+    #region Public Methods
+
     /**
      * <summary>
      *  Callback for when Player turn start even is raised
@@ -55,7 +55,7 @@ public class PlayerInputSystem : MonoBehaviour
         bMovementPhase = true;
         bAttackPhase = false;
     }
-    
+
     /**
      * <summary>
      *  Public getter for the attack odds, to be used by the UI Controller
@@ -72,7 +72,7 @@ public class PlayerInputSystem : MonoBehaviour
         // If everything is properly selected we calculate the odds and return them
         return CalculateAttackOdds();
     }
-    
+
     /**
      * <summary>
      *  Callback responsible for allowing the user to confirm attack by clicking
@@ -84,7 +84,7 @@ public class PlayerInputSystem : MonoBehaviour
         // Calls the private method Confirm Attack with calculated odds
         ConfirmAttack(CalculateAttackOdds());
     }
-    
+
     /**
      * <summary>
      *  Defines the current turn status, including phase status, and turn ownership
@@ -132,7 +132,7 @@ public class PlayerInputSystem : MonoBehaviour
                 break;
         }
     }
-    
+
     /**
      * <summary>
      *  Callback for when player clicks on the Next Phase button
@@ -232,23 +232,23 @@ public class PlayerInputSystem : MonoBehaviour
 
         return _playerController.GetBaseDamage();
     }
-#endregion
-    
-#region Private methods
+    #endregion
+
+    #region Private methods
 
     #region UnityDefault
-        private void Awake()
-        {
-            _mainCamera = Camera.main;
-        }
-        
-        private void Update()
-        {
-            if (bMovementPhase) HandleMovementPhaseInput();
-            if (bAttackPhase) HandleAttackPhaseInput();
-        }
+    private void Awake()
+    {
+        _mainCamera = Camera.main;
+    }
+
+    private void Update()
+    {
+        if (bMovementPhase) HandleMovementPhaseInput();
+        if (bAttackPhase) HandleAttackPhaseInput();
+    }
     #endregion
-    
+
     /**
      * <summary>
      *  Private method responsible for handling player input during the attack Phase
@@ -285,7 +285,7 @@ public class PlayerInputSystem : MonoBehaviour
         // Should only handle player Select if we got a PlayerController
         if (playerController != null) HandlePlayerSelect(playerController);
     }
-    
+
     /**
      * <summary>
      *  Private method responsible for handling movement Input
@@ -380,14 +380,14 @@ public class PlayerInputSystem : MonoBehaviour
         string log;
         if (_playerController.HasAttacked())
         {
-            log = string.Format("{0} has already attacked, ignoring",_playerController.gameObject.name);
-            logEvent.SetArgument("text",typeof(string),string.Format("{0}",log));
+            log = string.Format("{0} has already attacked, ignoring", _playerController.gameObject.name);
+            logEvent.SetArgument("text", typeof(string), string.Format("{0}", log));
             logEvent.Raise();
             return;
         }
         _playerController.PlayAttackAnim(_aiControllable.GetPosition(), _aiControllable, attackOdds > randomValue);
-        log = string.Format("Player used {0} to attack {1}, {2}",_playerController.gameObject.name,_aiControllable.gameObject.name,attackOdds > randomValue?"Sucess":"Failed");
-        logEvent.SetArgument("text",typeof(string),string.Format("{0}, dealing {1} damage",log,(attackOdds > randomValue)?_playerController.GetBaseDamage().ToString():"0"));
+        log = string.Format("Player used {0} to attack {1}, {2}", _playerController.gameObject.name, _aiControllable.gameObject.name, attackOdds > randomValue ? "Sucess" : "Failed");
+        logEvent.SetArgument("text", typeof(string), string.Format("{0}, dealing {1} damage", log, (attackOdds > randomValue) ? _playerController.GetBaseDamage().ToString() : "0"));
         logEvent.Raise();
         _playerController.OnDeselected();
         _playerController = null;
@@ -409,7 +409,7 @@ public class PlayerInputSystem : MonoBehaviour
         float initialOdds = 0;
         float minDistance = float.MaxValue;
         Vector3 aiPos = _aiControllable.GetPosition();
-        
+
         // We get a direct LineCast from the player Character
         // to the AI target GameObjct
         if (Physics.Linecast(_playerController.GetCastPoint(), aiPos, out var hitInfo))
@@ -422,7 +422,7 @@ public class PlayerInputSystem : MonoBehaviour
                 minDistance = hitInfo.distance;
             }
         }
-        
+
         // we check if the distance is > than the max character Range
         // If so we set the odds to 0f
         if (minDistance > _playerController.GetMaxRange())
@@ -439,5 +439,5 @@ public class PlayerInputSystem : MonoBehaviour
         }
         return initialOdds;
     }
-#endregion
+    #endregion
 }

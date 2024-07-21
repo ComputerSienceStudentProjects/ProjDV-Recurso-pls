@@ -20,6 +20,11 @@ public class AIController : MonoBehaviour
     private List<GameObject> playerParty;
     [SerializeField] GameEvent EndAITurn;
 
+    /**
+         * <summary>
+         *  Waits for AI Event to be triggered and initiates turn logic for ai characters
+         * </summary>
+         */
     public async void OnAITurnStart()
     {
         Debug.Log("AI TURN STARTED");
@@ -31,18 +36,12 @@ public class AIController : MonoBehaviour
         {
             int index = obj.GetComponent<AIControllable>().FindClosestTarget(playerParty);
             if (playerParty.Count > 1)
-                // TODO: fix AI Behavior
-                /*
-                    ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
-                    Parameter name: index
-                    System.Collections.Generic.List`1[T].RemoveAt (System.Int32 index) (at <51fded79cd284d4d911c5949aff4cb21>:0)
-                    AIController.OnAITurnStart () (at Assets/Scripts/AIController.cs:35)
-                    System.Runtime.CompilerServices.AsyncMethodBuilderCore+<>c.<ThrowAsync>b__7_0 (System.Object state) (at <51fded79cd284d4d911c5949aff4cb21>:0)
-                    UnityEngine.UnitySynchronizationContext+WorkRequest.Invoke () (at <f1e29a71158e46cdb750140a667aea01>:0)
-                    UnityEngine.UnitySynchronizationContext.Exec () (at <f1e29a71158e46cdb750140a667aea01>:0)
-                    UnityEngine.UnitySynchronizationContext.ExecuteTasks () (at <f1e29a71158e46cdb750140a667aea01>:0)
-                 */
+            {
+                if (index < 0 || index > playerParty.Count)
+                    return; // If this happens something went wrong,
+                            // most likely the ai turn still started when all player chars were dead. This will fix an unrecoverable crash;
                 playerParty.RemoveAt(index);
+            }
         }
 
         await HandleAITurns();
@@ -51,6 +50,11 @@ public class AIController : MonoBehaviour
         EndAITurn.Raise();
     }
 
+    /**
+         * <summary>
+         *  Awaits for every AI character to finish its turn before starting the player turn event.
+         * </summary>
+         */
     async Task HandleAITurns()
     {
         foreach (GameObject obj in aiParty)
