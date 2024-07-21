@@ -8,11 +8,11 @@ public class MedKitPowerup : MonoBehaviour
     [SerializeField] private Material onMaterial;
     [SerializeField] private float resetTimer = 60;
     
-    private float availableHealing;
+    private float _availableHealing;
 
     private void Start()
     {
-        availableHealing = healingValue;
+        _availableHealing = healingValue;
         
     }
 
@@ -21,8 +21,8 @@ public class MedKitPowerup : MonoBehaviour
         if (other is { gameObject: { tag: "Player" } })
         {
             PlayerController controller = other.GetComponent<PlayerController>();
-            controller.AddHp(availableHealing);
-            availableHealing = 0;
+            controller.AddHp(_availableHealing);
+            _availableHealing = 0;
             _meshRenderer.material = offMaterial;
             Invoke(nameof(ResetHealing),resetTimer);
         }
@@ -30,7 +30,7 @@ public class MedKitPowerup : MonoBehaviour
 
     private void ResetHealing()
     {
-        availableHealing = healingValue;
+        _availableHealing = healingValue;
         _meshRenderer.material = onMaterial;
     }
 }

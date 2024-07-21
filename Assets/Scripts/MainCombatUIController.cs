@@ -10,7 +10,7 @@ public class MainCombatUIController : MonoBehaviour
     [SerializeField] private TurnCounter turnCounter;
     [SerializeField] private PlayerInputSystem inputSystem;
     
-    private VisualElement rootVE;
+    private VisualElement _rootVE;
     
     void Start()
     {
@@ -20,13 +20,13 @@ public class MainCombatUIController : MonoBehaviour
             return;
         }
         _uiDocument = GetComponent<UIDocument>();
-        rootVE = _uiDocument.rootVisualElement;
-        rootVE.Q<Button>("NextPhaseButton").clicked += NextPhaseAction;
-        rootVE.Q<Button>("NextTurnButton").clicked += NextTurnAction;
-        rootVE.Q<Button>("ConfirmAttackButton").clicked += ConfirmAttack;
-        rootVE.Q<Button>("ResumeBtn").clicked += TogglePauseMenu;
-        rootVE.Q<Button>("SaveBtn").clicked += SaveProgress;
-        rootVE.Q<Button>("MenuBtn").clicked += Menu;
+        _rootVE = _uiDocument.rootVisualElement;
+        _rootVE.Q<Button>("NextPhaseButton").clicked += NextPhaseAction;
+        _rootVE.Q<Button>("NextTurnButton").clicked += NextTurnAction;
+        _rootVE.Q<Button>("ConfirmAttackButton").clicked += ConfirmAttack;
+        _rootVE.Q<Button>("ResumeBtn").clicked += TogglePauseMenu;
+        _rootVE.Q<Button>("SaveBtn").clicked += SaveProgress;
+        _rootVE.Q<Button>("MenuBtn").clicked += Menu;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += FindReferences;
     }
@@ -35,7 +35,7 @@ public class MainCombatUIController : MonoBehaviour
     {
         Debug.Log("Finding references");
         _uiDocument = GetComponent<UIDocument>();
-        rootVE = _uiDocument?.rootVisualElement;
+        _rootVE = _uiDocument?.rootVisualElement;
         turnCounter = GameObject.Find("TurnTracker")?.GetComponent<TurnCounter>();
         inputSystem = GameObject.Find("PlayerInputSystem")?.GetComponent<PlayerInputSystem>();
     }
@@ -69,8 +69,8 @@ public class MainCombatUIController : MonoBehaviour
 
     private void TogglePauseMenu()
     {
-        Debug.Log("Is Visible? " + rootVE.Q<VisualElement>("PauseHUD").visible);
-        rootVE.Q<VisualElement>("PauseHUD").visible = !rootVE.Q<VisualElement>("PauseHUD").visible;
+        Debug.Log("Is Visible? " + _rootVE.Q<VisualElement>("PauseHUD").visible);
+        _rootVE.Q<VisualElement>("PauseHUD").visible = !_rootVE.Q<VisualElement>("PauseHUD").visible;
         Time.timeScale = (Time.timeScale == 0.0f)? 1.0f : 0f;
     }
 
@@ -78,15 +78,15 @@ public class MainCombatUIController : MonoBehaviour
     {
         float attackOdds = inputSystem.GetOdds();
         int damage = inputSystem.GetDamage();
-        rootVE.Q<Label>("attackOdds").text = (int)(attackOdds * 100) + "%";
-        rootVE.Q<Label>("damageNumber").text = damage + " DMG";
-        rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Visible;
+        _rootVE.Q<Label>("attackOdds").text = (int)(attackOdds * 100) + "%";
+        _rootVE.Q<Label>("damageNumber").text = damage + " DMG";
+        _rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Visible;
     }
     
     private void ConfirmAttack()
     {
         inputSystem.ConfirmAttack();
-        rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Hidden;
+        _rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Hidden;
     }
     
     private void NextTurnAction()
@@ -97,42 +97,42 @@ public class MainCombatUIController : MonoBehaviour
 
     private void NextPhaseAction()
     {
-        rootVE.Q<Label>("PlayerStatus").text = "ATTACKING";
+        _rootVE.Q<Label>("PlayerStatus").text = "ATTACKING";
         inputSystem.FinishPlayerPhase();
     }
 
     public void ChangeToPlayerTurn()
     {
-        rootVE.Q<Label>("PlayerStatus").text = "MOVING";
-        rootVE.Q<Label>("AiStatus").text = "WAITING";
-        rootVE.Q<Label>("AiStatus").style.color = Color.gray;
-        rootVE.Q<Label>("PlayerStatus").style.color = Color.black;
+        _rootVE.Q<Label>("PlayerStatus").text = "MOVING";
+        _rootVE.Q<Label>("AiStatus").text = "WAITING";
+        _rootVE.Q<Label>("AiStatus").style.color = Color.gray;
+        _rootVE.Q<Label>("PlayerStatus").style.color = Color.black;
     }
 
     public void UpdateTurnCounter()
     {
-        if (rootVE == null || turnCounter == null || inputSystem == null) 
+        if (_rootVE == null || turnCounter == null || inputSystem == null) 
             FindReferences(SceneManager.GetActiveScene(),LoadSceneMode.Single);
-        rootVE.Q<Label>("TurnCounter").text = "TURN " + turnCounter.GetTurnCount();
+        _rootVE.Q<Label>("TurnCounter").text = "TURN " + turnCounter.GetTurnCount();
     }
     
     public void ChangeToAITurn()
     {
-        rootVE.Q<Label>("PlayerStatus").text = "WAITING";
-        rootVE.Q<Label>("AiStatus").text = "PLAYING";
-        rootVE.Q<Label>("AiStatus").style.color = Color.black;
-        rootVE.Q<Label>("PlayerStatus").style.color = Color.gray;
+        _rootVE.Q<Label>("PlayerStatus").text = "WAITING";
+        _rootVE.Q<Label>("AiStatus").text = "PLAYING";
+        _rootVE.Q<Label>("AiStatus").style.color = Color.black;
+        _rootVE.Q<Label>("PlayerStatus").style.color = Color.gray;
     }
 
     public void UpdateHpBars()
     {
-        if (rootVE == null)
+        if (_rootVE == null)
             FindReferences(SceneManager.GetActiveScene(),LoadSceneMode.Single);
         int playerIndex = 1;
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject playerObject in playerObjects)
         {
-            VisualElement partyRoot = rootVE.Q<VisualElement>("CombatPartyHUD");
+            VisualElement partyRoot = _rootVE.Q<VisualElement>("CombatPartyHUD");
             VisualElement characterVE = partyRoot.Q<VisualElement>("Character" + playerIndex + "VE");
             PlayerController playerController = playerObject.GetComponent<PlayerController>();
             float sizeMultiplier = playerController.GetHealthPercentage();
@@ -145,7 +145,7 @@ public class MainCombatUIController : MonoBehaviour
     {
         ChangeToPlayerTurn();
         if (levelDataPlayerPhaseStatus == PlayerPhaseStatus.Attack) 
-            rootVE.Q<Label>("PlayerStatus").text = "ATTACK";
-        else rootVE.Q<Label>("PlayerStatus").text = "MOVING";
+            _rootVE.Q<Label>("PlayerStatus").text = "ATTACK";
+        else _rootVE.Q<Label>("PlayerStatus").text = "MOVING";
     }
 }
