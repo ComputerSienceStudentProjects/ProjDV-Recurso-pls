@@ -47,24 +47,53 @@ public class PlayerController : MonoBehaviour
 
 #region Public Methods
     #region Public Async Tasks
+        /**
+         * <summary>
+         *  Public async task responsible for performing a movement to a point
+         * </summary>
+         * <param name="point">
+         *  Point to move towards
+         * </param>
+         */
         public async void PerformMove(Vector3 point)
         {
+            // Checks if the player has moved already if so
+            // returns making sure the player can only move 
+            // 1 time per turn per character
             if (_hasMovedAlready) return;
+            // Make sure we are only moving within the max
+            // movement range for the character
             if (Vector3.Distance(transform.position, point) > maxMovementRange) return;
+            // Since we clicked on a valid place, we deselect the character
             OnDeselected();
+            // we create a new NavMeshPath
             var navMeshPath = new NavMeshPath();
+            // Calculate the path to the target point
             NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas, navMeshPath);
+            // if we don't have a valid path we return
             if (navMeshPath.status == NavMeshPathStatus.PathInvalid) return;
+            // we await for the character to move to the right angle
             await RotateTowards(navMeshPath.corners[navMeshPath.corners.Length - 1]);
+            // we set the animator flag
             _animator.SetBool("isMoving", true);
+            // we set the path for the agent
             _agent.SetPath(navMeshPath);
+            // we draw the path
             DrawPath(navMeshPath);
+            // set check flag
             _bShouldCheckIfReached = true;
+            // set the right outline
             _selectedMaterial.SetFloat("_OutlineSize", 0f);
             _walkingMaterial.SetFloat("_OutlineSize", 1.01f);
+            // set the moved flag
             _hasMovedAlready = true;
         }
         
+        /**
+         * <summary>
+         *  Plays the attack animation
+         * </summary>
+         */
         public async void PlayAttackAnim(Vector3 aiTargetPos, AIControllable aiTargetController, bool sucess)
         {
             await RotateTowards(aiTargetPos);
@@ -72,11 +101,18 @@ public class PlayerController : MonoBehaviour
             _aiTarget = aiTargetController ? aiTargetController : null;
         }
     #endregion
+    
+    /**
+     * <summary>Gets the castPoint for the gameObject</summary>
+     */
     public Vector3 GetCastPoint()
     {
         return castPoint.transform.position;
     }
-
+    
+    /**
+     * <summary>Method for dealing damage to the player</summary>
+     */
     public void TakeDamage(float damage)
     {
         health -= damage;
@@ -85,26 +121,33 @@ public class PlayerController : MonoBehaviour
         updateHpBarsEvent.Raise();
     }
     
+    /**
+     * <summary>Method for performing an attack</summary>
+     */
     public void PerformAttack()
     {
         _aiTarget.TakeDamage(GetBaseDamage());
     }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
+    
+    /**
+     * <summary>Method for getting base damage</summary>
+     */
     public int GetBaseDamage()
     {
         return baseDamage;
     }
 
+    /**
+     * <summary>Method for getting max Movement Range</summary>
+     */
     public float GetMaxRange()
     {
         return maxAttackRange;
     }
 
+    /**
+     * <summary>Method for healing the character</summary>
+     */
     public void AddHp(float healingValue)
     {
         health += healingValue;
@@ -167,8 +210,6 @@ public class PlayerController : MonoBehaviour
         bSelected = false;
         _selectedMaterial.SetFloat("_OutlineSize", 0f);
     }
-
-    
 
     public void ResetMovementFlag()
     {

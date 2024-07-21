@@ -142,16 +142,19 @@ public class PlayerInputSystem : MonoBehaviour
      */
     public void FinishPlayerPhase()
     {
-        if (bMovementPhase)
+        switch (bMovementPhase)
         {
-            bAttackPhase = true;
-            bMovementPhase = false;
-            _playerController = null;
-            _aiControllable = null;
-        }
-        else
-        {
-            FinishPlayerTurn();
+            case false when bAttackPhase == false:
+                return;
+            case true:
+                bAttackPhase = true;
+                bMovementPhase = false;
+                _playerController = null;
+                _aiControllable = null;
+                break;
+            default:
+                FinishPlayerTurn();
+                break;
         }
     }
 
@@ -166,6 +169,7 @@ public class PlayerInputSystem : MonoBehaviour
      */
     public void FinishPlayerTurn()
     {
+        if (bAttackPhase == false && bMovementPhase == false) return;
         bAttackPhase = false;
         _playerController?.OnDeselected();
         _playerController = null;

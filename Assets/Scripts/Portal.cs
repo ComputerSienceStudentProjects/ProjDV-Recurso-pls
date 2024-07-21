@@ -45,8 +45,7 @@ public class Portal : MonoBehaviour
     {
         SceneManager.sceneLoaded += UpdateSave;
     }
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
