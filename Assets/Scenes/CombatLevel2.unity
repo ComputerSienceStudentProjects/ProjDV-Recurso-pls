@@ -20841,6 +20841,7 @@ MonoBehaviour:
   cameraController: {fileID: 963194229}
   aiStartTurnEvent: {fileID: 11400000, guid: ac4a8c4107ab34e499293a7c1d48f2d7, type: 2}
   showAttacksEvent: {fileID: 11400000, guid: 9aac6cea2a7329a4884420e68439d968, type: 2}
+  logEvent: {fileID: 11400000, guid: 353391d6b639d26449537a8d3b2f57d6, type: 2}
 --- !u!114 &1598321851
 MonoBehaviour:
   m_ObjectHideFlags: 0
