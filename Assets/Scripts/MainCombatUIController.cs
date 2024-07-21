@@ -47,7 +47,7 @@ public class MainCombatUIController : MonoBehaviour
     
     private void Menu()
     { 
-        TogglePauseMenu(); 
+        TogglePauseMenu();
         Destroy(GameObject.Find("SaveManager"));
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Unreveal");
         Invoke(nameof(LoadMenu),1f);
@@ -55,6 +55,10 @@ public class MainCombatUIController : MonoBehaviour
 
     private void LoadMenu()
     {
+        foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            Destroy(playerObj);
+        }
         SceneManager.LoadScene("MainMenu");
     }
     
@@ -136,7 +140,7 @@ public class MainCombatUIController : MonoBehaviour
             VisualElement characterVE = partyRoot.Q<VisualElement>("Character" + playerIndex + "VE");
             PlayerController playerController = playerObject.GetComponent<PlayerController>();
             float sizeMultiplier = playerController.GetHealthPercentage();
-            characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
+            //characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
             playerIndex++;
         }
     }

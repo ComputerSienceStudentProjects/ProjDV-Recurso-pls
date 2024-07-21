@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour
      */
     public void PerformAttack()
     {
+        _hasAttackedAlready = true;
         _aiTarget.TakeDamage(GetBaseDamage());
     }
     
@@ -214,6 +215,11 @@ public class PlayerController : MonoBehaviour
     public void ResetMovementFlag()
     {
         _hasMovedAlready = false;
+    }
+    
+    public void ResetAttackFlag()
+    {
+        _hasAttackedAlready = false;
     }
 #endregion
 

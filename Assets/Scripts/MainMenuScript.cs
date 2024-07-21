@@ -42,6 +42,7 @@ public class MainMenuScript : MonoBehaviour
     
     private void NewGame()
     {
+        saveManager.SetSlot(1);
         saveManager.StartNewGame();
     }
 

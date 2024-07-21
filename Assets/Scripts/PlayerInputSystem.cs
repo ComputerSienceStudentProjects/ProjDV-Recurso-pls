@@ -48,6 +48,7 @@ public class PlayerInputSystem : MonoBehaviour
         foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
         {
             playerObj.GetComponent<PlayerController>().ResetMovementFlag();
+            playerObj.GetComponent<PlayerController>().ResetAttackFlag();
         }
         // Set the current phase for movement, since the movement phase
         // is always the first phase of each turn
@@ -179,6 +180,7 @@ public class PlayerInputSystem : MonoBehaviour
         foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
         {
             playerObj.GetComponent<PlayerController>().ResetMovementFlag();
+            playerObj.GetComponent<PlayerController>().ResetAttackFlag();
         }
     }
 
@@ -375,14 +377,21 @@ public class PlayerInputSystem : MonoBehaviour
         // If the attackOdds are greater than the random value
         // confirm the attack was a success
         // TODO: Raise the attackLog event
-        
+        string log;
+        if (_playerController.HasAttacked())
+        {
+            log = string.Format("{0} has already attacked, ignoring",_playerController.gameObject.name);
+            logEvent.SetArgument("text",typeof(string),string.Format("{0}",log));
+            logEvent.Raise();
+            return;
+        }
         _playerController.PlayAttackAnim(_aiControllable.GetPosition(), _aiControllable, attackOdds > randomValue);
+        log = string.Format("Player used {0} to attack {1}, {2}",_playerController.gameObject.name,_aiControllable.gameObject.name,attackOdds > randomValue?"Sucess":"Failed");
+        logEvent.SetArgument("text",typeof(string),string.Format("{0}, dealing {1} damage",log,(attackOdds > randomValue)?_playerController.GetBaseDamage().ToString():"0"));
+        logEvent.Raise();
         _playerController.OnDeselected();
         _playerController = null;
         _aiControllable = null;
-        string log = string.Format("Player used {0} to attack {1}, {2}",_playerController.gameObject.name,_aiControllable.gameObject.name,attackOdds > randomValue?"Sucess":"Failed");
-        logEvent.SetArgument("text",typeof(string),string.Format("{0}, dealing {1} damage",log,(attackOdds > randomValue)?_playerController.GetBaseDamage().ToString():"0"));
-        logEvent.Raise();
     }
 
     /**

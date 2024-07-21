@@ -444,6 +444,11 @@ public class Snapshot : ScriptableObject
      */
     public void PostLoad()
     {
+        foreach (GameObject spawnedObject in GameObject.FindGameObjectsWithTag("Player"))
+        {
+          Debug.Log(string.Format("Found an object {0} before spawning all entities, removing it",spawnedObject.name));
+          Destroy(spawnedObject);
+        }
         //Go through each player character Data for spawning
         foreach (CharacterData playerCharacterData in playerObjects)
         {

@@ -347,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886d8f79cd0c9dd4aa38e9b4c38ae988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  slider: {fileID: 7588927041828406002}
   target: {fileID: 4615814448869902618}
   offset: {x: 0, y: 2, z: 0}
 --- !u!1 &3705096761366606667
@@ -629,7 +629,7 @@ MonoBehaviour:
   initialHealth: 100
   baseDMG: 10
   health: 0
-  floatingHealthBar: {fileID: 0}
+  floatingHealthBar: {fileID: 2590723631910409866}
   attackRange: 1.5
   movementRange: 15
   AddToLog: {fileID: 11400000, guid: 353391d6b639d26449537a8d3b2f57d6, type: 2}
