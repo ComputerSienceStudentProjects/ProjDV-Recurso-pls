@@ -121,7 +121,7 @@ public class AIControllable : MonoBehaviour
             Debug.Log(string.Format("Ai {0} did not find a close enemy", gameObject.name));
         }
 
-        Debug.Log(string.Format("Ai {0} chose closest target as {1} with instanceID {2}", gameObject.name, playerParty[closestIndex].name, playerParty[closestIndex].GetInstanceID()));
+        //Debug.Log(string.Format("Ai {0} chose closest target as {1} with instanceID {2}", gameObject.name, playerParty[closestIndex].name, playerParty[closestIndex].GetInstanceID()));
 
         return closestIndex;
     }
