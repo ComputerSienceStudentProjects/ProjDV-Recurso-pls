@@ -16,34 +16,62 @@ MonoBehaviour:
   saveType: 0
   playerObjects:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -13.500761, y: 1.4379184, z: -3.2135048}
-    rotation: {x: -0, y: 0.8045278, z: -0, w: 0.593915}
-    health: 5
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 1
+    hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -14.267681, y: 1.4379184, z: -0.97083807}
-    rotation: {x: -0, y: 0.31356427, z: -0, w: 0.949567}
-    health: 7
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 1
+    hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -12.213521, y: 1.4379184, z: -7.4510384}
-    rotation: {x: -0, y: 0.61335397, z: -0, w: 0.7898082}
-    health: 1
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 1
+    hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
-    position: {x: -13.720478, y: 1.4379184, z: 4.24928}
-    rotation: {x: -0, y: 0.6283625, z: -0, w: 0.7779207}
-    health: 2
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 10
     baseDMG: 20
     hasAttacked: 0
-    hasMoved: 1
-  aiObjects: []
+    hasMoved: 0
+  aiObjects:
+  - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 100
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 100
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 100
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
+  - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    health: 100
+    baseDMG: 10
+    hasAttacked: 0
+    hasMoved: 0
   levelData:
     levelIndex: 1
     turnCount: 0
