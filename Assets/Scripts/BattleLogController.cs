@@ -1,9 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 
+
+/**
+ * <summary>
+ *
+ * </summary>
+ * <version>
+ *  <date here>/07/2024
+ * </version>
+ * <author>
+ *  Diogo Capela (<Email here>)
+ * </author>
+ */
 public class BattleLogController : MonoBehaviour
 {
     [SerializeField] private VisualTreeAsset UiComponent;

@@ -1,10 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
+
+/**
+ * <summary>
+ *  
+ * </summary>
+ * <version>
+ *  <date here>/07/2024
+ * </version>
+ * <author>
+ *  Diogo Capela (<Email here>)
+ * </author>
+ */
 public class AIControllable : MonoBehaviour
 {
     [SerializeField] private int initialHealth;

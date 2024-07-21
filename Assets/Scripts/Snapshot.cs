@@ -505,7 +505,8 @@ public class Snapshot : ScriptableObject
     private GameObject SpawnNewEntity(CharacterData data, bool isAI)
     {
         // Get the spawn points tagged with SpawnPointAI if isAI is true, or SpawnPointPlayer if isAI is false
-        foreach (GameObject spawnPoint in GameObject.FindGameObjectsWithTag(isAI ? "AISpawnPoints" : "PlayerSpawnPoints"))
+        foreach (GameObject spawnPoint in 
+                 GameObject.FindGameObjectsWithTag(isAI ? "AISpawnPoints" : "PlayerSpawnPoints"))
         {
             //Finds the first spawnPoint With no children to spawn under
             if (spawnPoint.transform.childCount == 0)
@@ -513,13 +514,19 @@ public class Snapshot : ScriptableObject
                 //returns the spawned GameObject with the character Data
                 if (isAI)
                 {
-                    GameObject ai = Instantiate(data.ModelReference, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);
+                    GameObject ai = Instantiate(data.ModelReference, 
+                                                spawnPoint.transform.position, 
+                                                Quaternion.identity, 
+                                                spawnPoint.transform);
                     AIControllable aIControllable = ai.GetComponent<AIControllable>();
                     aIControllable.ResetHealth();
                     data.Health = aIControllable.GetHealth();
                     return ai;
                 }
-                return Instantiate(data.ModelReference, spawnPoint.transform.position, Quaternion.identity, spawnPoint.transform);
+                return Instantiate(data.ModelReference, 
+                                   spawnPoint.transform.position, 
+                                   Quaternion.identity, 
+                                   spawnPoint.transform);
             }
         }
         //if for some reason we cant find a place to spawn the entity, return null as not spawned

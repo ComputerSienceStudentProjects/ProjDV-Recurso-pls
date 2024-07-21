@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -52,9 +48,6 @@ public class MainMenuScript : MonoBehaviour
     private void DoExit()
     {
         Application.Quit(0);
-        #if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-        #endif
     }
     
     private void ExitGame()

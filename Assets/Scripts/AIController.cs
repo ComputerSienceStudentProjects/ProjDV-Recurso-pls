@@ -2,6 +2,17 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/**
+ * <summary>
+ *
+ * </summary>
+ * <version>
+ *  <date here>/07/2024
+ * </version>
+ * <author>
+ *  Diogo Capela (<Email here>)
+ * </author>
+ */
 public class AIController : MonoBehaviour
 {
 

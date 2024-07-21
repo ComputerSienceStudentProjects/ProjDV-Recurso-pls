@@ -5,16 +5,15 @@ using Object = UnityEngine.Object;
 
 /**
  * <summary>
- *  Class for controlling the portals between levels
+ *  Class representing a scene
  * </summary>
- * <version>
- *  12/07/2024
+ *  * <version>
+ *  21/07/2024
  * </version>
  * <author>
  *  João Gouveia (joao.c.gouveia10@gmail.com)
  * </author>
  */
-
 [Serializable]
 public class SceneReference
 {
@@ -26,6 +25,17 @@ public class SceneReference
     public static implicit operator string(SceneReference sceneReference) => sceneReference.SceneName;
 }
 
+/**
+ * <summary>
+ *  Class for controlling the portals between levels
+ * </summary>
+ * <version>
+ *  12/07/2024
+ * </version>
+ * <author>
+ *  João Gouveia (joao.c.gouveia10@gmail.com)
+ * </author>
+ */
 public class Portal : MonoBehaviour
 {
     [SerializeField] private SceneReference targetScene;
