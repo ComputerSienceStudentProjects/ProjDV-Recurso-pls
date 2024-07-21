@@ -23,6 +23,7 @@ public class PlayerInputSystem : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     [SerializeField] private GameEvent aiStartTurnEvent;
     [SerializeField] private GameEvent showAttacksEvent;
+    [SerializeField] private GameEvent logEvent;
 
 #region private fields
     private PlayerController _playerController;
@@ -379,22 +380,9 @@ public class PlayerInputSystem : MonoBehaviour
         _playerController.OnDeselected();
         _playerController = null;
         _aiControllable = null;
-        
-        // TODO: DELETE THIS
-        // if (attackOdds > randomValue)
-        // {
-        //     _playerController.PlayAttackAnim(_aiControllable.GetPosition(), _aiControllable, true);
-        //     _playerController.OnDeselected();
-        //     _playerController = null;
-        //     _aiControllable = null;
-        // }
-        // else // We failed the attack 
-        // {
-        //     _playerController.PlayAttackAnim(_aiControllable.GetPosition(), _aiControllable, false);
-        //     _playerController.OnDeselected();
-        //     _playerController = null;
-        //     _aiControllable = null;
-        // }
+        string log = string.Format("Player used {0} to attack {1}, {2}",_playerController.gameObject.name,_aiControllable.gameObject.name,attackOdds > randomValue?"Sucess":"Failed");
+        logEvent.SetArgument("text",typeof(string),string.Format("{0}, dealing {1} damage",log,(attackOdds > randomValue)?_playerController.GetBaseDamage().ToString():"0"));
+        logEvent.Raise();
     }
 
     /**
