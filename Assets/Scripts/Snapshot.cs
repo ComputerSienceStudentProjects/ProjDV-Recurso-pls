@@ -465,6 +465,11 @@ public class Snapshot : ScriptableObject
             targetController.SetBaseDMG(playerCharacterData.BaseDamage);
         }
 
+        foreach (GameObject spawnedObject in GameObject.FindGameObjectsWithTag("AI"))
+        {
+         Debug.Log(string.Format("Found an object {0} before spawning all entities, removing it",spawnedObject.name));
+         Destroy(spawnedObject);
+        }
         //Go through each player character Data for spawning
         foreach (CharacterData aiCharacterData in aiObjects)
         {

@@ -392,6 +392,7 @@ public class PlayerInputSystem : MonoBehaviour
         _playerController.OnDeselected();
         _playerController = null;
         _aiControllable = null;
+        cameraController.UnlockOnGameObject();
     }
 
     /**
