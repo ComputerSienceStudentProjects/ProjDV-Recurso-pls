@@ -284,6 +284,7 @@ public class PlayerInputSystem : MonoBehaviour
         PlayerController playerController = hit.collider.GetComponent<PlayerController>();
         // Should only handle player Select if we got a PlayerController
         if (playerController != null) HandlePlayerSelect(playerController);
+        cameraController.UnlockOnGameObject();
     }
 
     /**
@@ -310,6 +311,7 @@ public class PlayerInputSystem : MonoBehaviour
                 // If not we handle MoveInput, since we know we clicked on a valid GameObject
                 if (playerController == null) HandleMoveInput(hit);
             }
+            cameraController.UnlockOnGameObject();
         }
     }
 

@@ -32,11 +32,11 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            RotateAroundPoint(Vector3.up, rotationSpeed * cameraMovementSensMultiplier);
+            RotateAroundPoint(new Vector3(0f,transform.position.y * Vector3.up.y,0f), rotationSpeed * cameraMovementSensMultiplier);
         }
         if (Input.GetKey(KeyCode.E))
         {
-            RotateAroundPoint(Vector3.up, -rotationSpeed * cameraMovementSensMultiplier);
+            RotateAroundPoint(new Vector3(0f,transform.position.y * Vector3.up.y,0f), -rotationSpeed * cameraMovementSensMultiplier);
         }
     }
 
