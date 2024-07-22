@@ -523,6 +523,7 @@ MonoBehaviour:
   hitAudioClip: {fileID: 8300000, guid: dbf888ec7c1500541a81802467d13677, type: 3}
   missAudioClip: {fileID: 8300000, guid: 7030b33d90949764f9a51d4920c381b2, type: 3}
   walkingAudioClip: {fileID: 8300000, guid: 1bac385a8458afa4ebfa634f3eb54a60, type: 3}
+  deathAudioClip: {fileID: 8300000, guid: 61a1681b95afde442a7f5fa8718057e9, type: 3}
   updateHpBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
   baseDamage: 10
   initialHealth: 100

@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip hitAudioClip;
     [SerializeField] private AudioClip missAudioClip;
     [SerializeField] private AudioClip walkingAudioClip;
+    [SerializeField] private AudioClip deathAudioClip;
     
     
     [Header("Game events")]
@@ -136,8 +137,17 @@ public class PlayerController : MonoBehaviour
     {
         health -= damage;
         if (health <= 0)
-            Destroy(gameObject);
+        {
+            audioSource.clip = deathAudioClip;
+            audioSource.Play();
+            Invoke(nameof(KillThisPlayer), 0.5f);
+        }
         updateHpBarsEvent.Raise();
+    }
+
+    private void KillThisPlayer()
+    {
+        Destroy(gameObject);
     }
     
     /**
