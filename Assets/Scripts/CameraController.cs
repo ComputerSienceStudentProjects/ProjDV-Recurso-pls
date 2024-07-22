@@ -33,11 +33,11 @@ public class CameraController : MonoBehaviour
 
     private void HandleRotation()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.E))
         {
             RotateAroundPoint(rotationPoint.transform.position, rotationSpeed * cameraMovementSensMultiplier);
         }
-        if (Input.GetKey(KeyCode.E))
+        if (Input.GetKey(KeyCode.Q))
         {
             RotateAroundPoint(rotationPoint.transform.position, -rotationSpeed * cameraMovementSensMultiplier);
         }
