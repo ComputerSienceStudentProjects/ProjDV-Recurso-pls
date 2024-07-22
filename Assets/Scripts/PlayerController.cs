@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private bool _hasMovedAlready;
     private bool _hasAttackedAlready;
     private bool _bShouldCheckIfReached;
+    private bool _bShouldTp;
 #endregion
 
 #region Public Methods
@@ -57,6 +58,13 @@ public class PlayerController : MonoBehaviour
          */
         public async void PerformMove(Vector3 point)
         {
+            if (_bShouldTp)
+            {
+                transform.position = point;
+                _agent.SetDestination(point);
+                _bShouldTp = false;
+                return;
+            }
             // Checks if the player has moved already if so
             // returns making sure the player can only move 
             // 1 time per turn per character
@@ -293,4 +301,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 #endregion
+
+    public void SetMovementRadius(float f)
+    {
+        this.maxMovementRange = this.maxMovementRange * 2;
+    }
+
+    public void AddToMaxHP(int aditionalHealth)
+    {
+        this.initialHealth += aditionalHealth;
+        updateHpBarsEvent.Raise();
+    }
+
+    public void SetTpStatus(bool shouldTp)
+    {
+        _bShouldTp = shouldTp;
+        if (_bShouldTp)
+        {
+            OnSelected();
+            FindObjectOfType<PlayerInputSystem>().SetPlayerControllerReference(this);
+        }
+    }
 }

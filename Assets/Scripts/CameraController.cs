@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float scrollMovementSpeed;
     [Range(0.0f,1.0f)][SerializeField] private float cameraMovementSensMultiplier;
 
+    [SerializeField] private GameObject rotationPoint;
     private Vector3 _targetCoords;
     private GameObject _lockedObject;
     private bool _isLocked = false;
@@ -26,24 +27,25 @@ public class CameraController : MonoBehaviour
         Vector3 position = _lockedObject.transform.position;
         transform.position = Vector3.MoveTowards(transform.position,
             position  + new Vector3(0, yOffset, zOffset), movementSpeed * Time.deltaTime);
+        rotationPoint.transform.position = Vector3.MoveTowards(rotationPoint.transform.position,
+            rotationPoint.transform.position  + new Vector3(0, yOffset, zOffset), movementSpeed * Time.deltaTime);
     }
 
     private void HandleRotation()
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            RotateAroundPoint(new Vector3(0f,transform.position.y * Vector3.up.y,0f), rotationSpeed * cameraMovementSensMultiplier);
+            RotateAroundPoint(rotationPoint.transform.position, rotationSpeed * cameraMovementSensMultiplier);
         }
         if (Input.GetKey(KeyCode.E))
         {
-            RotateAroundPoint(new Vector3(0f,transform.position.y * Vector3.up.y,0f), -rotationSpeed * cameraMovementSensMultiplier);
+            RotateAroundPoint(rotationPoint.transform.position, -rotationSpeed * cameraMovementSensMultiplier);
         }
     }
 
     private void RotateAroundPoint(Vector3 axis, float angle)
     {
-        Vector3 point = Vector3.zero; 
-        transform.RotateAround(point, axis, angle);
+        transform.RotateAround(axis, Vector3.up, angle);
     }
     
     private void HandleKeyboard()
@@ -57,6 +59,7 @@ public class CameraController : MonoBehaviour
         localMovement.y = 0;
 
         transform.position += localMovement;
+        rotationPoint.transform.position += localMovement;
     }
 
 

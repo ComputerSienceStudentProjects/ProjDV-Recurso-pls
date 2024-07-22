@@ -447,4 +447,9 @@ public class PlayerInputSystem : MonoBehaviour
     {
         return bMovementPhase || bAttackPhase;
     }
+
+    public void SetPlayerControllerReference(PlayerController reference)
+    {
+        this._playerController = reference;
+    }
 }

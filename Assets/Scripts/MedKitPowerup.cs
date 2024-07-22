@@ -13,7 +13,6 @@ public class MedKitPowerup : MonoBehaviour
     private void Start()
     {
         _availableHealing = healingValue;
-        
     }
 
     private void OnTriggerEnter(Collider other)
