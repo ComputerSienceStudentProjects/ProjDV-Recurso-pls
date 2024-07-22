@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -6,6 +6,9 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(UIDocument))]
 public class MainCombatUIController : MonoBehaviour
 {
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    private static extern bool SetCursorPos(int X, int Y);
+    
     [Header("References")]
     private UIDocument _uiDocument;
     [SerializeField] private TurnCounter turnCounter;
@@ -25,23 +28,23 @@ public class MainCombatUIController : MonoBehaviour
         }
         _uiDocument = GetComponent<UIDocument>();
         _rootVE = _uiDocument.rootVisualElement;
-        _rootVE.Q<Button>("NextPhaseButton").clicked += NextPhaseAction;
-        _rootVE.Q<Button>("NextPhaseButton").clicked += PlayButtonAudioCLip;
-        _rootVE.Q<Button>("NextTurnButton").clicked += NextTurnAction;
-        _rootVE.Q<Button>("NextTurnButton").clicked += PlayButtonAudioCLip;
-        _rootVE.Q<Button>("ConfirmAttackButton").clicked += ConfirmAttack;
-        _rootVE.Q<Button>("ConfirmAttackButton").clicked += PlayButtonAudioCLip;
-        _rootVE.Q<Button>("ResumeBtn").clicked += TogglePauseMenu;
-        _rootVE.Q<Button>("ResumeBtn").clicked += PlayButtonAudioCLip;
-        _rootVE.Q<Button>("SaveBtn").clicked += SaveProgress;
-        _rootVE.Q<Button>("SaveBtn").clicked += PlayButtonAudioCLip;
-        _rootVE.Q<Button>("MenuBtn").clicked += Menu;
-        _rootVE.Q<Button>("MenuBtn").clicked += PlayButtonAudioCLip;
+        _rootVE.Q<Button>("NextPhaseButton").RegisterCallback<ClickEvent>(NextPhaseAction);
+        _rootVE.Q<Button>("NextPhaseButton").RegisterCallback<ClickEvent>(PlayButtonAudioCLip);
+        _rootVE.Q<Button>("NextTurnButton").RegisterCallback<ClickEvent>(NextTurnAction);
+        _rootVE.Q<Button>("NextTurnButton").RegisterCallback<ClickEvent>(PlayButtonAudioCLip);
+        _rootVE.Q<Button>("ConfirmAttackButton").RegisterCallback<ClickEvent>(ConfirmAttack);
+        _rootVE.Q<Button>("ConfirmAttackButton").RegisterCallback<ClickEvent>(PlayButtonAudioCLip);
+        _rootVE.Q<Button>("ResumeBtn").RegisterCallback<ClickEvent>(TogglePauseMenu);
+        _rootVE.Q<Button>("ResumeBtn").RegisterCallback<ClickEvent>(PlayButtonAudioCLip);
+        _rootVE.Q<Button>("SaveBtn").RegisterCallback<ClickEvent>(SaveProgress);
+        _rootVE.Q<Button>("SaveBtn").RegisterCallback<ClickEvent>(PlayButtonAudioCLip);
+        _rootVE.Q<Button>("MenuBtn").RegisterCallback<ClickEvent>(Menu);
+        _rootVE.Q<Button>("MenuBtn").RegisterCallback<ClickEvent>(PlayButtonAudioCLip);
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += FindReferences;
     }
 
-    private void PlayButtonAudioCLip()
+    private void PlayButtonAudioCLip(ClickEvent evt)
     {
         _audioSource.clip = buttonAudioClip;
         _audioSource.loop = false;
@@ -57,15 +60,15 @@ public class MainCombatUIController : MonoBehaviour
         inputSystem = GameObject.Find("PlayerInputSystem")?.GetComponent<PlayerInputSystem>();
     }
 
-    private void SaveProgress()
+    private void SaveProgress(ClickEvent evt)
     {
         FindObjectOfType<SaveManager>().SaveRequest();
-        TogglePauseMenu();
+        TogglePauseMenu(evt);
     }
     
-    private void Menu()
+    private void Menu(ClickEvent evt)
     { 
-        TogglePauseMenu();
+        TogglePauseMenu(evt);
         Destroy(GameObject.Find("SaveManager"));
         GameObject.Find("Reveal").GetComponent<Animator>().SetTrigger("Unreveal");
         Invoke(nameof(LoadMenu),1f);
@@ -87,7 +90,7 @@ public class MainCombatUIController : MonoBehaviour
             Debug.Log("Toggling PauseHUD");
             _audioSource.clip = escapeAudioClip;
             _audioSource.Play();
-            TogglePauseMenu();
+            TogglePauseMenu(null);
         }
         
         if (Input.GetKeyDown(KeyCode.K))
@@ -101,7 +104,7 @@ public class MainCombatUIController : MonoBehaviour
         Time.timeScale = Mathf.Approximately(Time.timeScale, 4f) ? 1f : 4f;
     }
 
-    private void TogglePauseMenu()
+    private void TogglePauseMenu(ClickEvent evt)
     {
         Debug.Log("Is Visible? " + _rootVE.Q<VisualElement>("PauseHUD").visible);
         _rootVE.Q<VisualElement>("PauseHUD").visible = !_rootVE.Q<VisualElement>("PauseHUD").visible;
@@ -117,28 +120,37 @@ public class MainCombatUIController : MonoBehaviour
         _rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Visible;
     }
     
-    private void ConfirmAttack()
+    private void ConfirmAttack(ClickEvent evt)
     {
         inputSystem.ConfirmAttack();
         _rootVE.Q<VisualElement>("AttackUI").style.visibility = Visibility.Hidden;
     }
     
-    private void NextTurnAction()
+    private void NextTurnAction(ClickEvent evt)
     {
-        if (inputSystem.isPlayerPlaying())
+        if (Input.mousePosition.x <= evt.position.x
+            && Input.mousePosition.y <= evt.position.y)
         {
-            inputSystem.FinishPlayerTurn();
-            ChangeToAITurn();
+            if (inputSystem.isPlayerPlaying())
+            {
+                ChangeToAITurn();
+                inputSystem.FinishPlayerTurn();
+            }
         }
     }
 
-    private void NextPhaseAction()
+    private void NextPhaseAction(ClickEvent evt)
     {
-        if (inputSystem.isPlayerPlaying())
+        if (Input.mousePosition.x <= evt.position.x 
+            && Input.mousePosition.y <= evt.position.y)
         {
-            _rootVE.Q<Label>("PlayerStatus").text = "ATTACKING";
-            inputSystem.FinishPlayerPhase();
+            if (inputSystem.isPlayerPlaying())
+            {
+                _rootVE.Q<Label>("PlayerStatus").text = "ATTACKING";
+                inputSystem.FinishPlayerPhase();
+            }
         }
+        
     }
 
     public void ChangeToPlayerTurn()
@@ -176,7 +188,7 @@ public class MainCombatUIController : MonoBehaviour
             VisualElement characterVE = partyRoot.Q<VisualElement>("Character" + playerIndex + "VE");
             PlayerController playerController = playerObject.GetComponent<PlayerController>();
             float sizeMultiplier = playerController.GetHealthPercentage();
-            characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
+            //characterVE.Q<VisualElement>("HPBar").style.width = (int)(74 * sizeMultiplier);
             playerIndex++;
         }
     }

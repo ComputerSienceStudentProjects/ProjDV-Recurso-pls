@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
         if (health <= 0)
         {
             audioSource.clip = deathAudioClip;
+            audioSource.loop = false;
             audioSource.Play();
             Invoke(nameof(KillThisPlayer), 0.5f);
         }
@@ -159,12 +160,14 @@ public class PlayerController : MonoBehaviour
         if (_bAttackSuccess)
         {
             audioSource.clip = hitAudioClip;
+            audioSource.loop = false;
             audioSource.Play();
             _aiTarget.TakeDamage(GetBaseDamage());
         }
         else
         {
             audioSource.clip = missAudioClip;
+            audioSource.loop = false;
             audioSource.Play();
         }
     }

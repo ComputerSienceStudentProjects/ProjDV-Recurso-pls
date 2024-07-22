@@ -176,8 +176,8 @@ public class PlayerInputSystem : MonoBehaviour
      */
     public void FinishPlayerTurn()
     {
-        if (bAttackPhase == false && bMovementPhase == false) return;
         bAttackPhase = false;
+        bMovementPhase = false;
         _playerController?.OnDeselected();
         _playerController = null;
         _aiControllable = null;
@@ -248,9 +248,9 @@ public class PlayerInputSystem : MonoBehaviour
     }
 
     private void Update()
-    {
+    {   
         if (bMovementPhase) HandleMovementPhaseInput();
-        if (bAttackPhase) HandleAttackPhaseInput();
+        else if (bAttackPhase) HandleAttackPhaseInput();
     }
     #endregion
 
