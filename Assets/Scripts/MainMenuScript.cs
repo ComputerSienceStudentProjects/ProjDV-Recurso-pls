@@ -7,6 +7,8 @@ public class MainMenuScript : MonoBehaviour
     [SerializeField] private SaveManager saveManager;
 
     [SerializeField] private UIDocument _uiDocument;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip buttonAudioClip;
     private VisualElement _rootVE;
     
     
@@ -14,14 +16,28 @@ public class MainMenuScript : MonoBehaviour
     {
         _rootVE = _uiDocument.rootVisualElement;
         _rootVE.Q<Button>("NewGameBtn").clicked += NewGame;
+        _rootVE.Q<Button>("NewGameBtn").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("QuitGameBtn").clicked += ExitGame;
+        _rootVE.Q<Button>("QuitGameBtn").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("LoadGameBtn").clicked += LoadGame;
+        _rootVE.Q<Button>("LoadGameBtn").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("backButton").clicked += Back;
+        _rootVE.Q<Button>("backButton").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("LoadSave1").clicked += LoadSave1;
+        _rootVE.Q<Button>("LoadSave1").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("LoadSave2").clicked += LoadSave2;
+        _rootVE.Q<Button>("LoadSave2").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("LoadSave3").clicked += LoadSave3;
+        _rootVE.Q<Button>("LoadSave3").clicked += PlayButtonAudioCLip;
     }
 
+    private void PlayButtonAudioCLip()
+    {
+        _audioSource.clip = buttonAudioClip;
+        _audioSource.loop = false;
+        _audioSource.Play();
+    }
+    
     private void LoadGame()
     {
         _rootVE.Q<VisualElement>("LoadingSaves").visible = true;

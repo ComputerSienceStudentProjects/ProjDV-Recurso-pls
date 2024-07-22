@@ -10,6 +10,9 @@ public class MainCombatUIController : MonoBehaviour
     private UIDocument _uiDocument;
     [SerializeField] private TurnCounter turnCounter;
     [SerializeField] private PlayerInputSystem inputSystem;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip buttonAudioClip;
+    [SerializeField] private AudioClip escapeAudioClip;
     
     private VisualElement _rootVE;
     
@@ -23,15 +26,28 @@ public class MainCombatUIController : MonoBehaviour
         _uiDocument = GetComponent<UIDocument>();
         _rootVE = _uiDocument.rootVisualElement;
         _rootVE.Q<Button>("NextPhaseButton").clicked += NextPhaseAction;
+        _rootVE.Q<Button>("NextPhaseButton").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("NextTurnButton").clicked += NextTurnAction;
+        _rootVE.Q<Button>("NextTurnButton").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("ConfirmAttackButton").clicked += ConfirmAttack;
+        _rootVE.Q<Button>("ConfirmAttackButton").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("ResumeBtn").clicked += TogglePauseMenu;
+        _rootVE.Q<Button>("ResumeBtn").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("SaveBtn").clicked += SaveProgress;
+        _rootVE.Q<Button>("SaveBtn").clicked += PlayButtonAudioCLip;
         _rootVE.Q<Button>("MenuBtn").clicked += Menu;
+        _rootVE.Q<Button>("MenuBtn").clicked += PlayButtonAudioCLip;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += FindReferences;
     }
 
+    private void PlayButtonAudioCLip()
+    {
+        _audioSource.clip = buttonAudioClip;
+        _audioSource.loop = false;
+        _audioSource.Play();
+    }
+    
     private void FindReferences(Scene arg0, LoadSceneMode arg1)
     {
         Debug.Log("Finding references");
@@ -69,6 +85,8 @@ public class MainCombatUIController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Toggling PauseHUD");
+            _audioSource.clip = escapeAudioClip;
+            _audioSource.Play();
             TogglePauseMenu();
         }
         

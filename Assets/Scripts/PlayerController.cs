@@ -20,6 +20,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject castPoint;
     [SerializeField] private SkinnedMeshRenderer meshRenderer;
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitAudioClip;
+    [SerializeField] private AudioClip missAudioClip;
+    [SerializeField] private AudioClip walkingAudioClip;
+    
     
     [Header("Game events")]
     [SerializeField] private GameEvent updateHpBarsEvent;
@@ -44,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private bool _hasAttackedAlready;
     private bool _bShouldCheckIfReached;
     private bool _bShouldTp;
+    private bool _bAttackSuccess;
 #endregion
 
 #region Public Methods
@@ -63,6 +69,7 @@ public class PlayerController : MonoBehaviour
                 transform.position = point;
                 _agent.SetDestination(point);
                 _bShouldTp = false;
+                SetMovementRadius(0.5f);
                 return;
             }
             // Checks if the player has moved already if so
@@ -84,6 +91,9 @@ public class PlayerController : MonoBehaviour
             await RotateTowards(navMeshPath.corners[navMeshPath.corners.Length - 1]);
             // we set the animator flag
             _animator.SetBool("isMoving", true);
+            audioSource.clip = walkingAudioClip;
+            audioSource.loop = true;
+            audioSource.Play();
             // we set the path for the agent
             _agent.SetPath(navMeshPath);
             // we draw the path
@@ -102,10 +112,11 @@ public class PlayerController : MonoBehaviour
          *  Plays the attack animation
          * </summary>
          */
-        public async void PlayAttackAnim(Vector3 aiTargetPos, AIControllable aiTargetController, bool sucess)
+        public async void PlayAttackAnim(Vector3 aiTargetPos, AIControllable aiTargetController, bool success)
         {
             await RotateTowards(aiTargetPos);
             _animator.SetTrigger("Attack");
+            _bAttackSuccess = success;
             _aiTarget = aiTargetController ? aiTargetController : null;
         }
     #endregion
@@ -135,7 +146,17 @@ public class PlayerController : MonoBehaviour
     public void PerformAttack()
     {
         _hasAttackedAlready = true;
-        _aiTarget.TakeDamage(GetBaseDamage());
+        if (_bAttackSuccess)
+        {
+            audioSource.clip = hitAudioClip;
+            audioSource.Play();
+            _aiTarget.TakeDamage(GetBaseDamage());
+        }
+        else
+        {
+            audioSource.clip = missAudioClip;
+            audioSource.Play();
+        }
     }
     
     /**
@@ -254,6 +275,7 @@ public class PlayerController : MonoBehaviour
             cameraController.UnlockOnGameObject();
             _pathLineRenderer.positionCount = 0;
             _animator.SetBool("isMoving", false);
+            audioSource.Stop();
             _walkingMaterial.SetFloat("_OutlineSize", 0f);
             if (bSelected) _selectedMaterial.SetFloat("_OutlineSize", 1.01f);
             _bShouldCheckIfReached = false;
@@ -302,9 +324,9 @@ public class PlayerController : MonoBehaviour
     }
 #endregion
 
-    public void SetMovementRadius(float f)
+    public void SetMovementRadius(float multiplier)
     {
-        this.maxMovementRange = this.maxMovementRange * 2;
+        this.maxMovementRange *= multiplier;
     }
 
     public void AddToMaxHP(int aditionalHealth)
@@ -318,6 +340,7 @@ public class PlayerController : MonoBehaviour
         _bShouldTp = shouldTp;
         if (_bShouldTp)
         {
+            SetMovementRadius(4f);
             OnSelected();
             FindObjectOfType<PlayerInputSystem>().SetPlayerControllerReference(this);
         }

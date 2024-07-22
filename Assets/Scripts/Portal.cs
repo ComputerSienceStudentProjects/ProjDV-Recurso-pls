@@ -40,6 +40,8 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private SceneReference targetScene;
     [SerializeField] private Animator _animator;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip portalSound;
 
     private void Start()
     {
@@ -53,6 +55,8 @@ public class Portal : MonoBehaviour
             _animator.SetTrigger("Unreveal");
             Invoke(nameof(loadNextLevel),1f);
             GetComponent<BoxCollider>().isTrigger = false;
+            _audioSource.clip = portalSound;
+            _audioSource.Play();
         }
     }
 
