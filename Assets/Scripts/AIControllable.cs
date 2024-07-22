@@ -36,6 +36,12 @@ public class AIControllable : MonoBehaviour
     [SerializeField] GameEvent AddToLog;
 
     private string logText;
+    
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitAudioClip;
+    [SerializeField] private AudioClip missAudioClip;
+    [SerializeField] private AudioClip walkingAudioClip;
+    [SerializeField] private AudioClip deathAudioClip;
 
     void Start()
     {
@@ -207,6 +213,9 @@ public class AIControllable : MonoBehaviour
             DrawPath(path);
         }
         _animator.SetBool("is_walking", true);
+        audioSource.clip = walkingAudioClip;
+        audioSource.loop = true;
+        audioSource.Play();
         await WaitUntilReachedTarget(destination, direction);
     }
 

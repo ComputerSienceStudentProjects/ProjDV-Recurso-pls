@@ -22359,9 +22359,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnCounter: {fileID: 0}
   inputSystem: {fileID: 0}
-  _audioSource: {fileID: 0}
-  buttonAudioClip: {fileID: 0}
-  escapeAudioClip: {fileID: 0}
+  _audioSource: {fileID: 952086937}
+  buttonAudioClip: {fileID: 8300000, guid: 8b198aa3c8935424da1bbff800952043, type: 3}
+  escapeAudioClip: {fileID: 8300000, guid: c39bb44a7636f834799fc299b3ac139b, type: 3}
 --- !u!114 &952086933
 MonoBehaviour:
   m_ObjectHideFlags: 0
