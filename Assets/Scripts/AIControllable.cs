@@ -446,6 +446,7 @@ public class AIControllable : MonoBehaviour
     public void DoHeal()
     {
         health += healPower;
+        floatingHealthBar.UpdateHealthBar(health, initialHealth);
         isHealingOrAttacking = false;
     }
 

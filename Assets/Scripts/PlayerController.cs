@@ -25,11 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip missAudioClip;
     [SerializeField] private AudioClip walkingAudioClip;
     [SerializeField] private AudioClip deathAudioClip;
-    
-    
+
+
     [Header("Game events")]
     [SerializeField] private GameEvent updateHpBarsEvent;
-    
+
     [Header("Character Settings")]
     [SerializeField] private int baseDamage;
     [SerializeField] private int initialHealth;
@@ -37,8 +37,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxAttackRange;
     [SerializeField] private float maxMovementRange;
     [SerializeField] private bool bSelected;
-    
-#region Private Properties
+
+    [SerializeField] private FloatingHealth healthBar;
+
+    #region Private Properties
     private Material _selectedMaterial;
     private Material _walkingMaterial;
     private AIControllable _aiTarget;
@@ -51,77 +53,77 @@ public class PlayerController : MonoBehaviour
     private bool _bShouldCheckIfReached;
     private bool _bShouldTp;
     private bool _bAttackSuccess;
-#endregion
-
-#region Public Methods
-    #region Public Async Tasks
-        /**
-         * <summary>
-         *  Public async task responsible for performing a movement to a point
-         * </summary>
-         * <param name="point">
-         *  Point to move towards
-         * </param>
-         */
-        public async void PerformMove(Vector3 point)
-        {
-            if (_bShouldTp)
-            {
-                transform.position = point;
-                _agent.SetDestination(point);
-                _bShouldTp = false;
-                SetMovementRadius(0.5f);
-                return;
-            }
-            // Checks if the player has moved already if so
-            // returns making sure the player can only move 
-            // 1 time per turn per character
-            if (_hasMovedAlready) return;
-            // Make sure we are only moving within the max
-            // movement range for the character
-            if (Vector3.Distance(transform.position, point) > maxMovementRange) return;
-            // Since we clicked on a valid place, we deselect the character
-            OnDeselected();
-            // we create a new NavMeshPath
-            var navMeshPath = new NavMeshPath();
-            // Calculate the path to the target point
-            NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas, navMeshPath);
-            // if we don't have a valid path we return
-            if (navMeshPath.status == NavMeshPathStatus.PathInvalid) return;
-            // we await for the character to move to the right angle
-            await RotateTowards(navMeshPath.corners[navMeshPath.corners.Length - 1]);
-            // we set the animator flag
-            _animator.SetBool("isMoving", true);
-            audioSource.clip = walkingAudioClip;
-            audioSource.loop = true;
-            audioSource.Play();
-            // we set the path for the agent
-            _agent.SetPath(navMeshPath);
-            // we draw the path
-            DrawPath(navMeshPath);
-            // set check flag
-            _bShouldCheckIfReached = true;
-            // set the right outline
-            _selectedMaterial.SetFloat("_OutlineSize", 0f);
-            _walkingMaterial.SetFloat("_OutlineSize", 1.01f);
-            // set the moved flag
-            _hasMovedAlready = true;
-        }
-        
-        /**
-         * <summary>
-         *  Plays the attack animation
-         * </summary>
-         */
-        public async void PlayAttackAnim(Vector3 aiTargetPos, AIControllable aiTargetController, bool success)
-        {
-            await RotateTowards(aiTargetPos);
-            _animator.SetTrigger("Attack");
-            _bAttackSuccess = success;
-            _aiTarget = aiTargetController ? aiTargetController : null;
-        }
     #endregion
-    
+
+    #region Public Methods
+    #region Public Async Tasks
+    /**
+     * <summary>
+     *  Public async task responsible for performing a movement to a point
+     * </summary>
+     * <param name="point">
+     *  Point to move towards
+     * </param>
+     */
+    public async void PerformMove(Vector3 point)
+    {
+        if (_bShouldTp)
+        {
+            transform.position = point;
+            _agent.SetDestination(point);
+            _bShouldTp = false;
+            SetMovementRadius(0.5f);
+            return;
+        }
+        // Checks if the player has moved already if so
+        // returns making sure the player can only move 
+        // 1 time per turn per character
+        if (_hasMovedAlready) return;
+        // Make sure we are only moving within the max
+        // movement range for the character
+        if (Vector3.Distance(transform.position, point) > maxMovementRange) return;
+        // Since we clicked on a valid place, we deselect the character
+        OnDeselected();
+        // we create a new NavMeshPath
+        var navMeshPath = new NavMeshPath();
+        // Calculate the path to the target point
+        NavMesh.CalculatePath(transform.position, point, NavMesh.AllAreas, navMeshPath);
+        // if we don't have a valid path we return
+        if (navMeshPath.status == NavMeshPathStatus.PathInvalid) return;
+        // we await for the character to move to the right angle
+        await RotateTowards(navMeshPath.corners[navMeshPath.corners.Length - 1]);
+        // we set the animator flag
+        _animator.SetBool("isMoving", true);
+        audioSource.clip = walkingAudioClip;
+        audioSource.loop = true;
+        audioSource.Play();
+        // we set the path for the agent
+        _agent.SetPath(navMeshPath);
+        // we draw the path
+        DrawPath(navMeshPath);
+        // set check flag
+        _bShouldCheckIfReached = true;
+        // set the right outline
+        _selectedMaterial.SetFloat("_OutlineSize", 0f);
+        _walkingMaterial.SetFloat("_OutlineSize", 1.01f);
+        // set the moved flag
+        _hasMovedAlready = true;
+    }
+
+    /**
+     * <summary>
+     *  Plays the attack animation
+     * </summary>
+     */
+    public async void PlayAttackAnim(Vector3 aiTargetPos, AIControllable aiTargetController, bool success)
+    {
+        await RotateTowards(aiTargetPos);
+        _animator.SetTrigger("Attack");
+        _bAttackSuccess = success;
+        _aiTarget = aiTargetController ? aiTargetController : null;
+    }
+    #endregion
+
     /**
      * <summary>Gets the castPoint for the gameObject</summary>
      */
@@ -129,13 +131,14 @@ public class PlayerController : MonoBehaviour
     {
         return castPoint.transform.position;
     }
-    
+
     /**
      * <summary>Method for dealing damage to the player</summary>
      */
     public void TakeDamage(float damage)
     {
         health -= damage;
+        healthBar.UpdateHealthBar(health, initialHealth);
         if (health <= 0)
         {
             audioSource.clip = deathAudioClip;
@@ -150,7 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(gameObject);
     }
-    
+
     /**
      * <summary>Method for performing an attack</summary>
      */
@@ -171,7 +174,7 @@ public class PlayerController : MonoBehaviour
             audioSource.Play();
         }
     }
-    
+
     /**
      * <summary>Method for getting base damage</summary>
      */
@@ -194,6 +197,7 @@ public class PlayerController : MonoBehaviour
     public void AddHp(float healingValue)
     {
         health += healingValue;
+        healthBar.UpdateHealthBar(health, initialHealth);
         if (health > initialHealth)
         {
             health = initialHealth;
@@ -239,7 +243,7 @@ public class PlayerController : MonoBehaviour
     {
         return health / initialHealth;
     }
-    
+
     public void OnSelected()
     {
         movementCircleObject.SetActive(true);
@@ -258,59 +262,59 @@ public class PlayerController : MonoBehaviour
     {
         _hasMovedAlready = false;
     }
-    
+
     public void ResetAttackFlag()
     {
         _hasAttackedAlready = false;
     }
-#endregion
+    #endregion
 
-#region Private Methods
+    #region Private Methods
     #region Unity Default
-        private void Awake()
-        {
-            _agent = GetComponent<NavMeshAgent>();
-            _animator = GetComponent<Animator>();
-            cameraController = Camera.main.gameObject.GetComponent<CameraController>();
-            
-            _pathLineRenderer = GetComponent<LineRenderer>();
-            health = initialHealth;
-            
-            _selectedMaterial = meshRenderer.materials[1];
-            _walkingMaterial = meshRenderer.materials[2];
-        }
-        
-        private void Update()
-        {
-            movementCircleObject.transform.localScale = new Vector3(maxMovementRange * 2f, maxMovementRange * 2f, 1f);
-            if (!_bShouldCheckIfReached) return;
-            if (!ReachedDestinationOrGaveUp()) return;
-            cameraController.UnlockOnGameObject();
-            _pathLineRenderer.positionCount = 0;
-            _animator.SetBool("isMoving", false);
-            audioSource.Stop();
-            _walkingMaterial.SetFloat("_OutlineSize", 0f);
-            if (bSelected) _selectedMaterial.SetFloat("_OutlineSize", 1.01f);
-            _bShouldCheckIfReached = false;
-        }
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+        cameraController = Camera.main.gameObject.GetComponent<CameraController>();
+
+        _pathLineRenderer = GetComponent<LineRenderer>();
+        health = initialHealth;
+
+        _selectedMaterial = meshRenderer.materials[1];
+        _walkingMaterial = meshRenderer.materials[2];
+    }
+
+    private void Update()
+    {
+        movementCircleObject.transform.localScale = new Vector3(maxMovementRange * 2f, maxMovementRange * 2f, 1f);
+        if (!_bShouldCheckIfReached) return;
+        if (!ReachedDestinationOrGaveUp()) return;
+        cameraController.UnlockOnGameObject();
+        _pathLineRenderer.positionCount = 0;
+        _animator.SetBool("isMoving", false);
+        audioSource.Stop();
+        _walkingMaterial.SetFloat("_OutlineSize", 0f);
+        if (bSelected) _selectedMaterial.SetFloat("_OutlineSize", 1.01f);
+        _bShouldCheckIfReached = false;
+    }
     #endregion
 
     #region Private Async Tasks
-        private async Task RotateTowards(Vector3 corner)
+    private async Task RotateTowards(Vector3 corner)
+    {
+        Vector3 direction = (corner - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+
+        while (Quaternion.Angle(transform.rotation, lookRotation) > 0.1f)
         {
-            Vector3 direction = (corner - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-
-            while (Quaternion.Angle(transform.rotation, lookRotation) > 0.1f)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-                await Task.Yield();
-            }
-
-            transform.rotation = lookRotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            await Task.Yield();
         }
+
+        transform.rotation = lookRotation;
+    }
     #endregion
-    
+
     private bool ReachedDestinationOrGaveUp()
     {
         if (!_agent.pathPending)
@@ -325,7 +329,7 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-    
+
     private void DrawPath(NavMeshPath path)
     {
         var positions = path.corners;
@@ -335,7 +339,7 @@ public class PlayerController : MonoBehaviour
             _pathLineRenderer.SetPosition(i, positions[i] + new Vector3(0, 0.5f, 0));
         }
     }
-#endregion
+    #endregion
 
     public void SetMovementRadius(float multiplier)
     {
