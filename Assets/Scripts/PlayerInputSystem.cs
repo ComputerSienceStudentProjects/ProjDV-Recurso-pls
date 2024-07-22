@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
@@ -45,7 +48,9 @@ public class PlayerInputSystem : MonoBehaviour
         // TODO: Test if the attack flag is also being properly reset
         // TODO: Test if this is actually needed, since its
         // TODO: actually reset when the player finishes the turn
-        foreach (GameObject playerObj in GameObject.FindGameObjectsWithTag("Player"))
+        GameObject[] playerParty = GameObject.FindGameObjectsWithTag("Player");
+        if (playerParty.Length < 1) SceneManager.LoadScene("GameOver");
+        foreach (GameObject playerObj in playerParty)
         {
             playerObj.GetComponent<PlayerController>().ResetMovementFlag();
             playerObj.GetComponent<PlayerController>().ResetAttackFlag();

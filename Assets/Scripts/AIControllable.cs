@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -63,8 +64,9 @@ public class AIControllable : MonoBehaviour
          */
     public void TakeDamage(float damage)
     {
-        floatingHealthBar.UpdateHealthBar(health, initialHealth);
         health -= damage;
+
+        floatingHealthBar.UpdateHealthBar(health, initialHealth);
         _animator.SetTrigger("take_damage");
         if (health <= 0)
             _animator.SetTrigger("death");
@@ -140,16 +142,18 @@ public class AIControllable : MonoBehaviour
         for (int i = 0; i < playerParty.Count; i++)
         {
             float distance = Vector3.Distance(gameObject.transform.position, playerParty[i].transform.position);
+            Debug.Log("Distance to target:" + distance);
             if (distance < leastDistance) { leastDistance = distance; currentTarget = playerParty[i]; closestIndex = i; }
         }
 
         if (closestIndex == -1)
         {
             Debug.Log(string.Format("Ai {0} did not find a close enemy", gameObject.name));
+            currentTarget = null;
         }
 
         //Debug.Log(string.Format("Ai {0} chose closest target as {1} with instanceID {2}", gameObject.name, playerParty[closestIndex].name, playerParty[closestIndex].GetInstanceID()));
-
+        leastDistance = 100f;
         return closestIndex;
     }
     /**
@@ -167,7 +171,6 @@ public class AIControllable : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, currentTarget.transform.position);
         Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
-        Debug.Log(distance + "," + direction);
         if (distance <= attackRange)
         {
             Debug.Log("We can attack");
@@ -185,7 +188,7 @@ public class AIControllable : MonoBehaviour
             AddToLog.SetArgument("text", typeof(string), logText);
             AddToLog.Raise();
             await RotateTowards(direction);
-            destination = transform.position + direction * (distance - attackRange);
+            destination = transform.position + direction * (distance - attackRange / 2);
             NavMeshPath path = new NavMeshPath();
             NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
             DrawPath(path);
@@ -320,6 +323,7 @@ public class AIControllable : MonoBehaviour
         //  We're in range of attack within a decent health amount so trading attacks is a decent idea, below 50hp the hit chance should be very low so it makes sense to retreat and heal up,
         //the ai will not be able to run away further then the player can move unless the player also chose to desengage the ai so the heal can be canceled though that might not be the smartest choice.
         //  Will need balancing most likely if I can implement the heal after a turn of not being attacked mechanic, for now it will be somewhat janky.
+        Debug.Log((Vector3.Distance(transform.position, currentTarget.transform.position) <= attackRange) + "," + attackRange + "," + Vector3.Distance(transform.position, currentTarget.transform.position));
         if (Vector3.Distance(transform.position, currentTarget.transform.position) <= attackRange)
         {
             Vector3 direction = (currentTarget.transform.position - transform.position).normalized;
@@ -406,7 +410,7 @@ public class AIControllable : MonoBehaviour
             currentTarget.GetComponent<PlayerController>().TakeDamage(getBaseDMG());
             Debug.Log("Did hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
-            logText = gameObject.name + " has attacked " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + hitChance + "% chance of hitting.";
+            logText = gameObject.name + " has attacked " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + health + "% chance of hitting.";
             AddToLog.SetArgument("text", typeof(string), logText);
             AddToLog.Raise();
         }

@@ -37,10 +37,11 @@ public class AIController : MonoBehaviour
             int index = obj.GetComponent<AIControllable>().FindClosestTarget(playerParty);
             if (playerParty.Count > 1)
             {
-                if (index < 0 || index > playerParty.Count)
-                    return; // If this happens something went wrong,
-                            // most likely the ai turn still started when all player chars were dead. This will fix an unrecoverable crash;
-                playerParty.RemoveAt(index);
+                if (index >= 0 && index < playerParty.Count)
+                {
+                    Debug.Log(index + "," + playerParty.Count);
+                    playerParty.RemoveAt(index);
+                }
             }
         }
 
