@@ -617,7 +617,7 @@ public class Snapshot : ScriptableObject
         {
             characterData.HasAttacked = false;
             characterData.HasMoved = false;
-            characterData.Health = 10;
+            characterData.Health = 100;
             characterData.Position = Vector3.zero;
             characterData.Rotation = Quaternion.identity;
         }
@@ -626,7 +626,7 @@ public class Snapshot : ScriptableObject
         {
             aiCharacterData.HasAttacked = false;
             aiCharacterData.HasMoved = false;
-            aiCharacterData.Health = 10;
+            aiCharacterData.Health = 100;
             aiCharacterData.Position = Vector3.zero;
             aiCharacterData.Rotation = Quaternion.identity;
         }
