@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -43,6 +44,7 @@ public class MainCombatUIController : MonoBehaviour
     private void SaveProgress()
     {
         FindObjectOfType<SaveManager>().SaveRequest();
+        TogglePauseMenu();
     }
     
     private void Menu()
@@ -69,6 +71,16 @@ public class MainCombatUIController : MonoBehaviour
             Debug.Log("Toggling PauseHUD");
             TogglePauseMenu();
         }
+        
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Toggle2X();
+        }
+    }
+
+    private void Toggle2X()
+    {
+        Time.timeScale = Mathf.Approximately(Time.timeScale, 4f) ? 1f : 4f;
     }
 
     private void TogglePauseMenu()
@@ -95,14 +107,20 @@ public class MainCombatUIController : MonoBehaviour
     
     private void NextTurnAction()
     {
-        inputSystem.FinishPlayerTurn();
-        ChangeToAITurn();
+        if (inputSystem.isPlayerPlaying())
+        {
+            inputSystem.FinishPlayerTurn();
+            ChangeToAITurn();
+        }
     }
 
     private void NextPhaseAction()
     {
-        _rootVE.Q<Label>("PlayerStatus").text = "ATTACKING";
-        inputSystem.FinishPlayerPhase();
+        if (inputSystem.isPlayerPlaying())
+        {
+            _rootVE.Q<Label>("PlayerStatus").text = "ATTACKING";
+            inputSystem.FinishPlayerPhase();
+        }
     }
 
     public void ChangeToPlayerTurn()

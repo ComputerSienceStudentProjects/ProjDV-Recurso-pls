@@ -440,4 +440,9 @@ public class PlayerInputSystem : MonoBehaviour
         return initialOdds;
     }
     #endregion
+
+    public bool isPlayerPlaying()
+    {
+        return bMovementPhase || bAttackPhase;
+    }
 }

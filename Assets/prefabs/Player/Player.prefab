@@ -519,9 +519,9 @@ MonoBehaviour:
   meshRenderer: {fileID: 6243259582312078420}
   cameraController: {fileID: 0}
   updateHpBarsEvent: {fileID: 11400000, guid: 4e6a56f113fb8634ca45eb0dc766f85d, type: 2}
-  baseDamage: 0
-  initialHealth: 10
-  health: 0
+  baseDamage: 10
+  initialHealth: 100
+  health: 100
   maxAttackRange: 5
   maxMovementRange: 12
   bSelected: 0

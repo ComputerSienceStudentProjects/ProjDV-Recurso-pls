@@ -627,7 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialHealth: 100
-  baseDMG: 10
+  baseDMG: 100
   health: 0
   floatingHealthBar: {fileID: 2590723631910409866}
   attackRange: 1.5

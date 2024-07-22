@@ -18,28 +18,28 @@ MonoBehaviour:
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 1697203016726631623, guid: 3e2f86d17f53eb04e9525118da8b8e59, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
@@ -47,28 +47,28 @@ MonoBehaviour:
   - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
   - modelReference: {fileID: 5423875902674162592, guid: a9491826a03b9bc4fa457b2085ad0309, type: 3}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-    health: 10
+    health: 100
     baseDMG: 10
     hasAttacked: 0
     hasMoved: 0
