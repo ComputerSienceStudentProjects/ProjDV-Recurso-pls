@@ -8174,9 +8174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38d5f24de49dde34f91a229a1ecdc35f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 1362769011}
-  offMaterial: {fileID: 2100000, guid: a20f246146df6ac48bade91676ec503f, type: 2}
-  onMaterial: {fileID: 2100000, guid: 612aa3f942ff623428fe9c2d11454565, type: 2}
+  _meshRenderer: {fileID: 1347584401}
+  offMaterial: {fileID: 2100000, guid: 612aa3f942ff623428fe9c2d11454565, type: 2}
+  onMaterial: {fileID: 2100000, guid: a20f246146df6ac48bade91676ec503f, type: 2}
   resetTimer: 60
 --- !u!114 &332594519
 MonoBehaviour:
@@ -16304,9 +16304,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetTimer: 60
   healingValue: 0
-  _meshRenderer: {fileID: 1955682776}
-  offMaterial: {fileID: 2100000, guid: e4e17daacc9f8784c9d9207adb26183d, type: 2}
-  onMaterial: {fileID: 2100000, guid: 20138536ba708cd4abe9e581293702fe, type: 2}
+  _meshRenderer: {fileID: 1347584401}
+  offMaterial: {fileID: 2100000, guid: 59afb6dd5cdde8b4a817c03eabcfbb50, type: 2}
+  onMaterial: {fileID: 2100000, guid: e2c435d80dececa48b41ff77f8173029, type: 2}
 --- !u!114 &679435960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26914,10 +26914,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bc79c47417c30e4cb49247f80f13146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aditionalHealth: 20
-  _meshRenderer: {fileID: 1499111137}
-  offMaterial: {fileID: 2100000, guid: a5966594fb7ba244cb50f08d292a3ac7, type: 2}
-  onMaterial: {fileID: 2100000, guid: ad74b3e81a9903647bc2d447849a9d49, type: 2}
+  aditionalHealth: 0
+  _meshRenderer: {fileID: 1347584401}
+  offMaterial: {fileID: 2100000, guid: ad74b3e81a9903647bc2d447849a9d49, type: 2}
+  onMaterial: {fileID: 2100000, guid: a5966594fb7ba244cb50f08d292a3ac7, type: 2}
   resetTimer: 60
 --- !u!114 &1109302869
 MonoBehaviour:
@@ -33312,8 +33312,8 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: d4b31d3fd25206a4a8458c793fb2ad47, type: 3}
     sceneName: CombatLevel2
   _animator: {fileID: 2026340720}
-  _audioSource: {fileID: 1300349806}
-  portalSound: {fileID: 8300000, guid: d9c94661bd8cdd74aabf02e4720bb905, type: 3}
+  _audioSource: {fileID: 0}
+  portalSound: {fileID: 0}
 --- !u!65 &1300349805
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35091,7 +35091,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20138536ba708cd4abe9e581293702fe, type: 2}
+  - {fileID: 2100000, guid: a20f246146df6ac48bade91676ec503f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -38097,7 +38097,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20138536ba708cd4abe9e581293702fe, type: 2}
+  - {fileID: 2100000, guid: a5966594fb7ba244cb50f08d292a3ac7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -50703,7 +50703,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20138536ba708cd4abe9e581293702fe, type: 2}
+  - {fileID: 2100000, guid: e2c435d80dececa48b41ff77f8173029, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -52494,7 +52494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b15254a6e031d4418911fc15d686515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sens: 5
+  sens: 2
 --- !u!4 &2031136256
 Transform:
   m_ObjectHideFlags: 0

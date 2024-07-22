@@ -36,6 +36,12 @@ public class AIControllable : MonoBehaviour
     [SerializeField] GameEvent AddToLog;
 
     private string logText;
+    
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip hitAudioClip;
+    [SerializeField] private AudioClip missAudioClip;
+    [SerializeField] private AudioClip walkingAudioClip;
+    [SerializeField] private AudioClip deathAudioClip;
 
     void Start()
     {
@@ -79,6 +85,9 @@ public class AIControllable : MonoBehaviour
          */
     public void Die()
     {
+        audioSource.clip = deathAudioClip;
+        audioSource.loop = false;
+        audioSource.Play();
         Destroy(gameObject);
     }
 
@@ -207,6 +216,9 @@ public class AIControllable : MonoBehaviour
             DrawPath(path);
         }
         _animator.SetBool("is_walking", true);
+        audioSource.clip = walkingAudioClip;
+        audioSource.loop = true;
+        audioSource.Play();
         await WaitUntilReachedTarget(destination, direction);
     }
 
@@ -263,6 +275,7 @@ public class AIControllable : MonoBehaviour
                 if (!_agent.hasPath || _agent.velocity.sqrMagnitude == 0f)
                 {
                     _animator.SetBool("is_walking", false);
+                    audioSource.Stop();
                     _pathLineRenderer.positionCount = 0;
                     return true;
                 }
@@ -330,7 +343,6 @@ public class AIControllable : MonoBehaviour
             await RotateTowards(direction);
             _animator.SetTrigger("attack");
             isHealingOrAttacking = true;
-
         }
     }
 
@@ -348,12 +360,13 @@ public class AIControllable : MonoBehaviour
         destination = FindFurthestValidFleePoint(36);
         Vector3 direction = (transform.position - destination).normalized;
         _animator.SetBool("is_walking", true);
+        audioSource.clip = walkingAudioClip;
+        audioSource.loop = true;
+        audioSource.Play();
         NavMeshPath path = new NavMeshPath();
         NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
         DrawPath(path);
         await WaitUntilReachedTarget(destination, direction);
-
-
     }
 
     /**
@@ -407,6 +420,7 @@ public class AIControllable : MonoBehaviour
         bool willHit = hitChance >= initialHealth - health;
         if (willHit)
         {
+            audioSource.clip = hitAudioClip;
             currentTarget.GetComponent<PlayerController>().TakeDamage(getBaseDMG());
             Debug.Log("Did hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
@@ -416,6 +430,7 @@ public class AIControllable : MonoBehaviour
         }
         else
         {
+            audioSource.clip = missAudioClip;
             Debug.Log("Did not hit!");
             Debug.Log("Hit chance: " + hitChance + ", hit chance needed:" + (initialHealth - health));
             logText = gameObject.name + " has failed to attack " + currentTarget.name + " for " + getBaseDMG() + "HP), with " + hitChance + "% chance of hitting.";
@@ -423,6 +438,8 @@ public class AIControllable : MonoBehaviour
             AddToLog.Raise();
         }
         isHealingOrAttacking = false;
+        audioSource.loop = false;
+        audioSource.Play();
     }
 
     /**
