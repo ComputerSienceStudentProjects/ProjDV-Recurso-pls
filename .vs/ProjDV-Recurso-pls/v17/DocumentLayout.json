@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "D:\\Github\\ProjDV-Recurso-pls\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|d:\\github\\projdv-recurso-pls\\assets\\scripts\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|d:\\github\\projdv-recurso-pls\\assets\\scripts\\mouseemulator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\mouseemulator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|D:\\Github\\ProjDV-Recurso-pls\\assets\\scripts\\aicontrollable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\aicontrollable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|D:\\Github\\ProjDV-Recurso-pls\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|d:\\github\\projdv-recurso-pls\\assets\\scripts\\playerinputsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerinputsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|d:\\github\\projdv-recurso-pls\\assets\\scripts\\aicontrollable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\aicontrollable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|d:\\github\\projdv-recurso-pls\\assets\\scripts\\aicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|D:\\Github\\ProjDV-Recurso-pls\\assets\\scripts\\aicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\aicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|d:\\github\\projdv-recurso-pls\\assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E5B3F845-8C51-ED29-EB9C-5DCC41C3EB61}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Github\\ProjDV-Recurso-pls\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Terrain\\TerrainLit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
@@ -34,11 +42,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "MouseEmulator.cs",
+              "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\MouseEmulator.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\MouseEmulator.cs",
+              "ToolTip": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\MouseEmulator.cs",
+              "RelativeToolTip": "Assets\\Scripts\\MouseEmulator.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T17:58:02.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CameraController.cs",
+              "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\CameraController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CameraController.cs",
+              "ToolTip": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\CameraController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CameraController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAC0AAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-22T17:55:49.461Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "AIController.cs",
               "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\AIController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AIController.cs",
@@ -46,18 +80,17 @@
               "RelativeToolTip": "Assets\\Scripts\\AIController.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAACsAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-21T14:47:21.841Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-21T14:47:21.841Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AIControllable.cs",
               "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\AIControllable.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AIControllable.cs",
               "ToolTip": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\AIControllable.cs",
               "RelativeToolTip": "Assets\\Scripts\\AIControllable.cs",
-              "ViewState": "AQIAAGEAAAAAAAAAAAAnwHoAAAAAAAAA",
+              "ViewState": "AQIAACoAAAAAAAAAAAASwL4AAABYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T14:45:58.353Z",
               "EditorCaption": ""
@@ -70,27 +103,27 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerController.cs",
               "ToolTip": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\PlayerController.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerController.cs",
-              "ViewState": "AQIAAB0AAAAAAAAAAAAQwFYAAAAEAAAA",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAQwC8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T14:42:44.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "PlayerInputSystem.cs",
               "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\PlayerInputSystem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerInputSystem.cs",
               "ToolTip": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\PlayerInputSystem.cs",
               "RelativeToolTip": "Assets\\Scripts\\PlayerInputSystem.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAQwCwAAAA7AAAA",
+              "ViewState": "AQIAAB0AAAAAAAAAAABRwCQAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T14:41:36.887Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "TerrainLit.shader",
               "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Terrain\\TerrainLit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Terrain\\TerrainLit.shader",
@@ -98,12 +131,11 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@14.0.11\\Shaders\\Terrain\\TerrainLit.shader",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2024-07-16T22:56:16.165Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-16T22:56:16.165Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "SaveManager.cs",
               "DocumentMoniker": "D:\\Github\\ProjDV-Recurso-pls\\Assets\\Scripts\\SaveManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SaveManager.cs",
